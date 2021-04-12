@@ -17,9 +17,10 @@ namespace WpfGridControlTest01.Classes
     public enum ProgressingJob
     {
         IDLE = 0,
-        READ = 1,
+        RELOAD = 1,
         ADD = 2,
-        UPDATE = 3,
-        DELETE = 4
+        MODIFY = 3,
+        DELETE = 4,
+        APPLY = 5
     }
 }

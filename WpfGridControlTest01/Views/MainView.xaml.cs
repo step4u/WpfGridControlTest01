@@ -23,8 +23,25 @@ namespace WpfGridControlTest01.Views
         ObservableCollection<Product> Products;
         List<Product> originProducts;
         List<Product> addProducts;
+        List<Product> modifyProducts;
         List<Product> deleteProducts;
         Product deleteProduct;
+
+        ObservableCollection<Product1> Products1;
+        List<Product1> originProducts1;
+        List<Product1> addProducts1;
+        List<Product1> modifyProducts1;
+        List<Product1> deleteProducts1;
+        Product1 deleteProduct1;
+
+
+        ObservableCollection<Product2> Products2;
+        List<Product2> originProducts2;
+        List<Product2> addProducts2;
+        List<Product2> modifyProducts2;
+        List<Product2> deleteProducts2;
+        Product2 deleteProduct2;
+
         DoJobs dojobs;
         ProgressingJob progressingJob = ProgressingJob.IDLE;
 
@@ -38,9 +55,9 @@ namespace WpfGridControlTest01.Views
         private void MainView_Loaded(object sender, RoutedEventArgs e)
         {
             Products = viewmodel.Products;
-            Products.CollectionChanged += Products_CollectionChanged;
-            tableview0.Loaded += Tableview0_Loaded;
-            tableview0.CellValueChanged += Tableview0_CellValueChanged;
+            Products1 = viewmodel.Products1;
+            Products2 = viewmodel.Products2;
+            // Products.CollectionChanged += Products_CollectionChanged;
         }
 
         private void Products_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -62,15 +79,6 @@ namespace WpfGridControlTest01.Views
             }
         }
 
-        private void Tableview0_Loaded(object sender, RoutedEventArgs e)
-        {
-            originProducts = Products.Clone().ToList();
-        }
-
-        private void Tableview0_CellValueChanged(object sender, DevExpress.Xpf.Grid.CellValueChangedEventArgs e)
-        {
-
-        }
 
         private int number = 4;
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -87,30 +95,6 @@ namespace WpfGridControlTest01.Views
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            if (progressingJob == ProgressingJob.DELETE)
-            {
-                progressingJob = ProgressingJob.IDLE;
-                gridctrl0.SelectionMode = DevExpress.Xpf.Grid.MultiSelectMode.Row;
-                tableview0.ShowCheckBoxSelectorColumn = false;
-
-                viewmodel.BtnAdd = true;
-                viewmodel.BtnDel = true;
-                viewmodel.BtnReload = true;
-                viewmodel.BtnApply = true;
-                viewmodel.TxtBtnDel = "삭제";
-            }
-            else
-            {
-                progressingJob = ProgressingJob.DELETE;
-                gridctrl0.SelectionMode = DevExpress.Xpf.Grid.MultiSelectMode.MultipleRow;
-                tableview0.ShowCheckBoxSelectorColumn = true;
-
-                viewmodel.BtnAdd = false;
-                viewmodel.BtnDel = true;
-                viewmodel.BtnReload = false;
-                viewmodel.BtnApply = true;
-                viewmodel.TxtBtnDel = "삭제취소";
-            }
 
             //deleteProducts = gridctrl0.SelectedItems.Cast<Product>().ToList();
             //deleteProduct = deleteProducts.First();
@@ -151,82 +135,79 @@ namespace WpfGridControlTest01.Views
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("Apply button pressed.", "Debug");
-        }
 
+            modifyProducts2 = Products2.Where(x => originProducts2.Any(y => y.HasSameValues(x)) == false).ToList();
 
-
-        public byte[] Serialize(Object obj)
-        {
-            if (obj == null)
-            {
-                return null;
-            }
-
-            using (var memoryStream = new MemoryStream())
-            {
-                var binaryFormatter = new BinaryFormatter();
-
-                binaryFormatter.Serialize(memoryStream, obj);
-
-                var compressed = Compress(memoryStream.ToArray());
-                return compressed;
-            }
-        }
-
-        public Object DeSerialize(byte[] arrBytes)
-        {
-            using (var memoryStream = new MemoryStream())
-            {
-                var binaryFormatter = new BinaryFormatter();
-                var decompressed = Decompress(arrBytes);
-
-                memoryStream.Write(decompressed, 0, decompressed.Length);
-                memoryStream.Seek(0, SeekOrigin.Begin);
-
-                return binaryFormatter.Deserialize(memoryStream);
-            }
-        }
-
-        private byte[] Compress(byte[] input)
-        {
-            byte[] compressesData;
-
-            using (var outputStream = new MemoryStream())
-            {
-                using (var zip = new GZipStream(outputStream, CompressionMode.Compress))
-                {
-                    zip.Write(input, 0, input.Length);
-                }
-
-                compressesData = outputStream.ToArray();
-            }
-
-            return compressesData;
-        }
-
-        private byte[] Decompress(byte[] input)
-        {
-            byte[] decompressedData;
-
-            using (var outputStream = new MemoryStream())
-            {
-                using (var inputStream = new MemoryStream(input))
-                {
-                    using (var zip = new GZipStream(inputStream, CompressionMode.Decompress))
-                    {
-                        zip.CopyTo(outputStream);
-                    }
-                }
-
-                decompressedData = outputStream.ToArray();
-            }
-
-            return decompressedData;
+            this.ChangeUIStatus(ProgressingJob.IDLE);
         }
 
         private void btnModify_Click(object sender, RoutedEventArgs e)
         {
-            tableview0.AllowEditing = !tableview0.AllowEditing;
+            if (progressingJob == ProgressingJob.IDLE)
+            {
+                originProducts = Products.Clone().ToList();
+                originProducts1 = Products1.Clone().ToList();
+                originProducts2 = Products2.Clone().ToList();
+                this.ChangeUIStatus(ProgressingJob.MODIFY);
+            }
+            else if (progressingJob == ProgressingJob.MODIFY)
+            {
+                //Products.Clear();
+                //foreach (Product product in originProducts)
+                //{
+                //    Products.Add(product);
+                //}
+
+                Products = new ObservableCollection<Product>(originProducts.Clone().ToList());
+                Products1 = new ObservableCollection<Product1>(originProducts1.Clone().ToList());
+                // Products2 = new ObservableCollection<Product2>(originProducts2.Clone().ToList());
+
+                Products2.Clear();
+                foreach (Product2 product in originProducts2)
+                {
+                    Products2.Add(product);
+                }
+
+                this.ChangeUIStatus(ProgressingJob.IDLE);
+            }
+        }
+
+        private void ChangeUIStatus(ProgressingJob status)
+        {
+            this.progressingJob = status;
+
+            switch (status)
+            {
+                case ProgressingJob.RELOAD:
+                    break;
+                case ProgressingJob.IDLE:
+                    tableview0.AllowEditing = false;
+
+                    viewmodel.BtnAdd = true;
+                    viewmodel.BtnModify = true;
+                    viewmodel.BtnDel = true;
+                    viewmodel.BtnApply = true;
+
+                    viewmodel.TxtBtnReload = "화면갱신";
+                    viewmodel.TxtBtnAdd = "추가";
+                    viewmodel.TxtBtnModify = "수정";
+                    viewmodel.TxtBtnDel = "삭제";
+                    viewmodel.TxtBtnApply = "적용";
+                    break;
+                case ProgressingJob.ADD:
+                    break;
+                case ProgressingJob.MODIFY:
+                    // gridctrl0.SelectionMode = DevExpress.Xpf.Grid.MultiSelectMode.None;
+                    tableview0.AllowEditing = true;
+                    viewmodel.BtnAdd = false;
+                    viewmodel.BtnDel = false;
+                    viewmodel.BtnApply = true;
+
+                    viewmodel.TxtBtnModify = "수정취소";
+                    break;
+                case ProgressingJob.DELETE:
+                    break;
+            }
         }
     }
 }

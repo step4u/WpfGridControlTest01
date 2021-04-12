@@ -70,28 +70,26 @@ namespace WpfGridControlTest01.ViewModels
         {
             ShowMessageCommand = new DelegateCommand(ShowMessage);
 
-            if (IsInDesignMode)
-            {
-                Products = new ObservableCollection<Product>();
-                // Devices = new ObservableCollection<Device>();
-            }
-            else
-            {
-                InitData();
-            }
+            InitData();
 
             InitProperties();
             InitTimer();
         }
 
         public ObservableCollection<Product> Products {
-            get => GetValue<ObservableCollection<Product>>();
-            set => SetValue(value);
+            get { return GetValue<ObservableCollection<Product>>(); }
+            set { SetValue(value); }
         }
 
-        public ObservableCollection<Device> Devices {
-            get => GetValue<ObservableCollection<Device>>();
-            set => SetValue(value);
+        public ObservableCollection<Product1> Products1 {
+            get { return GetValue<ObservableCollection<Product1>>(); }
+            set { SetValue(value); }
+        }
+
+        ObservableCollection<Product2> _Products2;
+        public ObservableCollection<Product2> Products2 {
+            get { return _Products2; }
+            set { SetValue(ref _Products2, value, "Products2"); }
         }
 
         void ShowMessage()
@@ -101,31 +99,51 @@ namespace WpfGridControlTest01.ViewModels
 
         void InitData()
         {
-            Products = new ObservableCollection<Product>();
-
-            Products.Add(new Product()
+            if (IsInDesignMode)
             {
-                BandWide = "100",
-                Freq = "1000",
-                Chk1 = true,
-                Chk2 = false
-            });
-
-            Products.Add(new Product()
+                Products = new ObservableCollection<Product>();
+                Products1 = new ObservableCollection<Product1>();
+                Products2 = new ObservableCollection<Product2>();
+            }
+            else
             {
-                BandWide = "200",
-                Freq = "2000",
-                Chk1 = true,
-                Chk2 = true
-            });
+                Products = new ObservableCollection<Product>();
+                Products1 = new ObservableCollection<Product1>();
+                Products2 = new ObservableCollection<Product2>();
 
-            Products.Add(new Product()
-            {
-                BandWide = "300",
-                Freq = "3000",
-                Chk1 = false,
-                Chk2 = true
-            });
+                for (int i = 1; i <= 5; i++)
+                {
+                    Products.Add(new Product()
+                    {
+                        BandWide = string.Format("{0}00", i),
+                        Freq = string.Format("{0}000", i),
+                        Chk1 = true,
+                        Chk2 = false
+                    });
+                }
+
+                for (int i = 3; i <= 7; i++)
+                {
+                    Products1.Add(new Product1()
+                    {
+                        BandWide = string.Format("{0}00", i),
+                        Freq = string.Format("{0}000", i),
+                        Chk1 = true,
+                        Chk2 = false
+                    });
+                }
+
+                for (int i = 5; i <= 9; i++)
+                {
+                    Products2.Add(new Product2()
+                    {
+                        BandWide = string.Format("{0}00", i),
+                        Freq = string.Format("{0}000", i),
+                        Chk1 = true,
+                        Chk2 = false
+                    });
+                }
+            }
         }
 
         void InitProperties()
