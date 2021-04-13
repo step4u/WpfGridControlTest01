@@ -1,5 +1,7 @@
 ﻿using DevExpress.Mvvm;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace WpfGridControlTest01.Models
 {
@@ -7,7 +9,6 @@ namespace WpfGridControlTest01.Models
     {
         public Product2()
         {
-
         }
 
         bool _Chk1;
@@ -32,6 +33,24 @@ namespace WpfGridControlTest01.Models
         public string Freq {
             get { return _Freq; }
             set { SetValue(ref _Freq, value); }
+        }
+
+        List<ProductType> _ProductTypes;
+        public List<ProductType> ProductTypes {
+            get { return _ProductTypes; }
+            set { SetValue(ref _ProductTypes, value); }
+        }
+
+        ProductType _SelectedProdcutType;
+        public ProductType SelectedProdcutType {
+            get { return _SelectedProdcutType; }
+            set { SetValue(ref _SelectedProdcutType, value); }
+        }
+
+        int _SelectedProdcutTypeId;
+        public int SelectedProdcutTypeId {
+            get { return _SelectedProdcutTypeId; }
+            set { SetValue(ref _SelectedProdcutTypeId, value); }
         }
 
         public object Clone()

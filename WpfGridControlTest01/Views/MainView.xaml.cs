@@ -35,7 +35,7 @@ namespace WpfGridControlTest01.Views
         Product1 deleteProduct1;
 
 
-        ObservableCollection<Product2> Products2;
+        ObservableCollection<Product2> Products2 { get; set; }
         List<Product2> originProducts2;
         List<Product2> addProducts2;
         List<Product2> modifyProducts2;
@@ -52,8 +52,11 @@ namespace WpfGridControlTest01.Views
             this.Loaded += MainView_Loaded;
         }
 
+
+        MainViewModel viewmodel;
         private void MainView_Loaded(object sender, RoutedEventArgs e)
         {
+            viewmodel = (MainViewModel)this.DataContext;
             Products = viewmodel.Products;
             Products1 = viewmodel.Products1;
             Products2 = viewmodel.Products2;
@@ -183,27 +186,27 @@ namespace WpfGridControlTest01.Views
                 case ProgressingJob.IDLE:
                     tableview0.AllowEditing = false;
 
-                    viewmodel.BtnAdd = true;
-                    viewmodel.BtnModify = true;
-                    viewmodel.BtnDel = true;
-                    viewmodel.BtnApply = true;
+                    viewmodel.EnableBtnAdd = true;
+                    viewmodel.EnableBtnModify = true;
+                    viewmodel.EnableBtnDel = true;
+                    viewmodel.EnableBtnApply = true;
 
-                    viewmodel.TxtBtnReload = "화면갱신";
-                    viewmodel.TxtBtnAdd = "추가";
-                    viewmodel.TxtBtnModify = "수정";
-                    viewmodel.TxtBtnDel = "삭제";
-                    viewmodel.TxtBtnApply = "적용";
+                    viewmodel.BtnReload = "화면갱신";
+                    viewmodel.BtnAdd = "추가";
+                    viewmodel.BtnModify = "수정";
+                    viewmodel.BtnDel = "삭제";
+                    viewmodel.BtnApply = "적용";
                     break;
                 case ProgressingJob.ADD:
                     break;
                 case ProgressingJob.MODIFY:
                     // gridctrl0.SelectionMode = DevExpress.Xpf.Grid.MultiSelectMode.None;
                     tableview0.AllowEditing = true;
-                    viewmodel.BtnAdd = false;
-                    viewmodel.BtnDel = false;
-                    viewmodel.BtnApply = true;
+                    viewmodel.EnableBtnAdd = false;
+                    viewmodel.EnableBtnDel = false;
+                    viewmodel.EnableBtnApply = true;
 
-                    viewmodel.TxtBtnModify = "수정취소";
+                    viewmodel.BtnModify = "수정취소";
                     break;
                 case ProgressingJob.DELETE:
                     break;

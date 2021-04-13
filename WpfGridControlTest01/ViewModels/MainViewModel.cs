@@ -1,4 +1,5 @@
 ﻿using DevExpress.Mvvm;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Timers;
 using System.Windows.Controls;
@@ -12,52 +13,52 @@ namespace WpfGridControlTest01.ViewModels
         public ICommand ShowMessageCommand { get; private set; }
         IMessageBoxService MessageBoxService { get { return GetService<IMessageBoxService>(); } }
 
-        public string TxtBtnAdd {
-            get { return GetValue<string>(); }
-            set { SetValue(value); }
-        }
-
-        public string TxtBtnDel {
-            get { return GetValue<string>(); }
-            set { SetValue(value); }
-        }
-
-        public string TxtBtnReload {
-            get { return GetValue<string>(); }
-            set { SetValue(value); }
-        }
-
-        public string TxtBtnApply {
-            get { return GetValue<string>(); }
-            set { SetValue(value); }
-        }
-        public string TxtBtnModify {
-            get { return GetValue<string>(); }
-            set { SetValue(value); }
-        }
-
-        public bool BtnAdd {
+        public bool EnableBtnAdd {
             get { return GetValue<bool>(); }
             set { SetValue(value); }
         }
 
-        public bool BtnDel {
+        public bool EnableBtnDel {
             get { return GetValue<bool>(); }
             set { SetValue(value); }
         }
 
-        public bool BtnReload {
+        public bool EnableBtnReload {
             get { return GetValue<bool>(); }
             set { SetValue(value); }
         }
 
-        public bool BtnApply {
+        public bool EnableBtnApply {
+            get { return GetValue<bool>(); }
+            set { SetValue(value); }
+        }
+        public bool EnableBtnModify {
             get { return GetValue<bool>(); }
             set { SetValue(value); }
         }
 
-        public bool BtnModify {
-            get { return GetValue<bool>(); }
+        public string BtnAdd {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
+        public string BtnDel {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
+        public string BtnReload {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
+        public string BtnApply {
+            get { return GetValue<string>(); }
+            set { SetValue(value); }
+        }
+
+        public string BtnModify {
+            get { return GetValue<string>(); }
             set { SetValue(value); }
         }
 
@@ -71,7 +72,6 @@ namespace WpfGridControlTest01.ViewModels
             ShowMessageCommand = new DelegateCommand(ShowMessage);
 
             InitData();
-
             InitProperties();
             InitTimer();
         }
@@ -86,10 +86,13 @@ namespace WpfGridControlTest01.ViewModels
             set { SetValue(value); }
         }
 
-        ObservableCollection<Product2> _Products2;
         public ObservableCollection<Product2> Products2 {
-            get { return _Products2; }
-            set { SetValue(ref _Products2, value, "Products2"); }
+            get { return GetValue<ObservableCollection<Product2>>(); }
+            set { SetValue(value); }
+        }
+        public Product2 SelectedProduct {
+            get { return GetValue<Product2>(); }
+            set { SetValue(value); }
         }
 
         void ShowMessage()
@@ -110,6 +113,7 @@ namespace WpfGridControlTest01.ViewModels
                 Products = new ObservableCollection<Product>();
                 Products1 = new ObservableCollection<Product1>();
                 Products2 = new ObservableCollection<Product2>();
+                // SelectProductType = new Product2();
 
                 for (int i = 1; i <= 5; i++)
                 {
@@ -133,6 +137,26 @@ namespace WpfGridControlTest01.ViewModels
                     });
                 }
 
+                List<ProductType> productTypes = new List<ProductType>()
+                {
+                    new ProductType() {
+                        Id = 1,
+                        TypeName = "Type1"
+                    },
+                    new ProductType() {
+                        Id = 2,
+                        TypeName = "Type2"
+                    },
+                    new ProductType() {
+                        Id = 3,
+                        TypeName = "Type3"
+                    },
+                    new ProductType() {
+                        Id = 4,
+                        TypeName = "Type4"
+                    }
+                };
+
                 for (int i = 5; i <= 9; i++)
                 {
                     Products2.Add(new Product2()
@@ -140,7 +164,10 @@ namespace WpfGridControlTest01.ViewModels
                         BandWide = string.Format("{0}00", i),
                         Freq = string.Format("{0}000", i),
                         Chk1 = true,
-                        Chk2 = false
+                        Chk2 = false,
+                        ProductTypes = productTypes,
+                        SelectedProdcutType = productTypes[0],
+                        SelectedProdcutTypeId = 0
                     });
                 }
             }
@@ -148,16 +175,16 @@ namespace WpfGridControlTest01.ViewModels
 
         void InitProperties()
         {
-            TxtBtnAdd = "추가";
-            TxtBtnDel = "삭제";
-            TxtBtnReload = "갱신";
-            TxtBtnModify = "수정";
-            TxtBtnApply = "적용";
-            BtnAdd = true;
-            BtnDel = true;
-            BtnReload = true;
-            BtnApply = false;
-            BtnModify = true;
+            BtnAdd = "추가";
+            BtnDel = "삭제";
+            BtnReload = "갱신";
+            BtnModify = "수정";
+            BtnApply = "적용";
+            EnableBtnAdd = true;
+            EnableBtnDel = true;
+            EnableBtnReload = true;
+            EnableBtnApply = false;
+            EnableBtnModify = true;
         }
 
         private System.Timers.Timer timer;
