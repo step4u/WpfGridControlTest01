@@ -90,8 +90,14 @@ namespace WpfGridControlTest01.ViewModels
             get { return GetValue<ObservableCollection<Product2>>(); }
             set { SetValue(value); }
         }
-        public Product2 SelectedProduct {
-            get { return GetValue<Product2>(); }
+
+        public ObservableCollection<ProductType> PTypes {
+            get { return GetValue<ObservableCollection<ProductType>>(); }
+            set { SetValue(value); }
+        }
+
+        public ProductType SelectedPType {
+            get { return GetValue<ProductType>(); }
             set { SetValue(value); }
         }
 
@@ -157,6 +163,18 @@ namespace WpfGridControlTest01.ViewModels
                     }
                 };
 
+                PTypes = new ObservableCollection<ProductType>();
+                for (int i = 0; i < 9; i++)
+                {
+                    PTypes.Add(new ProductType()
+                    {
+                        Id = i + 1,
+                        TypeName = string.Format("PType{0}", i + 1),
+                    });
+                }
+
+                SelectedPType = PTypes[0];
+
                 for (int i = 5; i <= 9; i++)
                 {
                     Products2.Add(new Product2()
@@ -165,13 +183,27 @@ namespace WpfGridControlTest01.ViewModels
                         Freq = string.Format("{0}000", i),
                         Chk1 = true,
                         Chk2 = false,
-                        ProductTypes = productTypes,
-                        SelectedProdcutType = productTypes[0],
-                        SelectedProdcutTypeId = 0
+                        SelectedProdcutType = PTypes[0]
                     });
                 }
+
+
+                testProduct2 = new Product2() {
+                    Chk1 = false,
+                    BandWide = "345",
+                    Chk2 = true,
+                    Freq = "20000",
+                    SelectedProdcutType = PTypes[0]
+                };
+
+                testProducts2.Add(testProduct2);
+                testProducts22.Add(testProduct2);
             }
         }
+
+        public Product2 testProduct2;
+        public List<Product2> testProducts2 = new List<Product2>();
+        public List<Product2> testProducts22 = new List<Product2>();
 
         void InitProperties()
         {

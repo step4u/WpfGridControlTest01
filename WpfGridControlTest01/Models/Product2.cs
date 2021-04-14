@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reflection;
 
 namespace WpfGridControlTest01.Models
 {
@@ -35,11 +36,11 @@ namespace WpfGridControlTest01.Models
             set { SetValue(ref _Freq, value); }
         }
 
-        List<ProductType> _ProductTypes;
-        public List<ProductType> ProductTypes {
-            get { return _ProductTypes; }
-            set { SetValue(ref _ProductTypes, value); }
-        }
+        //List<ProductType> _ProductTypes;
+        //public List<ProductType> ProductTypes {
+        //    get { return _ProductTypes; }
+        //    set { SetValue(ref _ProductTypes, value); }
+        //}
 
         ProductType _SelectedProdcutType;
         public ProductType SelectedProdcutType {
@@ -47,15 +48,32 @@ namespace WpfGridControlTest01.Models
             set { SetValue(ref _SelectedProdcutType, value); }
         }
 
-        int _SelectedProdcutTypeId;
-        public int SelectedProdcutTypeId {
-            get { return _SelectedProdcutTypeId; }
-            set { SetValue(ref _SelectedProdcutTypeId, value); }
-        }
+        //int _SelectedProdcutTypeId;
+        //public int SelectedProdcutTypeId {
+        //    get { return _SelectedProdcutTypeId; }
+        //    set { SetValue(ref _SelectedProdcutTypeId, value); }
+        //}
 
         public object Clone()
         {
             return this.MemberwiseClone();
+        }
+
+        public override string ToString()
+        {
+            var properties = this.GetType().GetProperties();
+            foreach (PropertyInfo property in properties)
+            {
+                var itm = this.GetType().GetProperty(property.Name).GetValue(this);
+                System.Diagnostics.Debug.WriteLine(string.Format("{0} : {1}", property.Name, itm));
+            }
+
+            return base.ToString();
+        }
+
+        public void SetValues(string propertyName, object value)
+        {
+            this.GetType().GetProperty(propertyName).SetValue(this, value);
         }
 
         public bool HasSameValues(Product2 other)

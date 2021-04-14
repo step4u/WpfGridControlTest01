@@ -60,6 +60,14 @@ namespace WpfGridControlTest01.Views
             Products = viewmodel.Products;
             Products1 = viewmodel.Products1;
             Products2 = viewmodel.Products2;
+
+            Product2 tmp = new Product2() {
+                Chk1 = true,
+                BandWide = "200",
+                Chk2 = false,
+                Freq = "200000"
+            };
+            tmp.ToString();
             // Products.CollectionChanged += Products_CollectionChanged;
         }
 
@@ -86,15 +94,27 @@ namespace WpfGridControlTest01.Views
         private int number = 4;
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Products.Add(new Product()
-            {
-                BandWide = String.Format("{0}00", number),
-                Freq = String.Format("{0}000", number),
-                Chk1 = false,
-                Chk2 = false
-            });
-            number++;
+            //Products.Add(new Product()
+            //{
+            //    BandWide = String.Format("{0}00", number),
+            //    Freq = String.Format("{0}000", number),
+            //    Chk1 = false,
+            //    Chk2 = false
+            //});
+            //number++;
+            testProducts222.Add((Product2)viewmodel.testProduct2.Clone());
+            viewmodel.testProduct2.BandWide = "9999";
+
+            Product2 tmp2 = (Product2)testProducts222.Where(x => x.BandWide == "345").First();
+            testProducts23.Add((Product2)tmp2.Clone());
+            tmp2.BandWide = "33333";
+
+            viewmodel.testProduct2.SetValues("BandWide", "10000000");
+
+            testProducts222.Where(x => x.Freq == "1000").ToList().Clone();
         }
+        List<Product2> testProducts222 = new List<Product2>();
+        List<Product2> testProducts23 = new List<Product2>();
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
@@ -141,7 +161,7 @@ namespace WpfGridControlTest01.Views
 
             modifyProducts2 = Products2.Where(x => originProducts2.Any(y => y.HasSameValues(x)) == false).ToList();
 
-            this.ChangeUIStatus(ProgressingJob.IDLE);
+            //this.ChangeUIStatus(ProgressingJob.IDLE);
         }
 
         private void btnModify_Click(object sender, RoutedEventArgs e)
@@ -151,7 +171,7 @@ namespace WpfGridControlTest01.Views
                 originProducts = Products.Clone().ToList();
                 originProducts1 = Products1.Clone().ToList();
                 originProducts2 = Products2.Clone().ToList();
-                this.ChangeUIStatus(ProgressingJob.MODIFY);
+                //this.ChangeUIStatus(ProgressingJob.MODIFY);
             }
             else if (progressingJob == ProgressingJob.MODIFY)
             {
@@ -171,7 +191,7 @@ namespace WpfGridControlTest01.Views
                     Products2.Add(product);
                 }
 
-                this.ChangeUIStatus(ProgressingJob.IDLE);
+                //this.ChangeUIStatus(ProgressingJob.IDLE);
             }
         }
 
@@ -211,6 +231,19 @@ namespace WpfGridControlTest01.Views
                 case ProgressingJob.DELETE:
                     break;
             }
+        }
+
+        private void tableview0_CellValueChanged(object sender, DevExpress.Xpf.Grid.CellValueChangedEventArgs e)
+        {
+            var column = e.Column;
+            var fieldName = column.FieldName;
+            var newCellValue = e.Value;
+            var oldCellValue = e.OldValue;
+            var row = (Product2)e.Row;
+            int rowHandle = e.RowHandle;
+            bool handled = e.Handled;
+            var cell = e.Cell;
+
         }
     }
 }

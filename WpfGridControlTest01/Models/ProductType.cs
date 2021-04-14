@@ -1,4 +1,6 @@
 ﻿using DevExpress.Mvvm;
+using System;
+using WpfGridControlTest01.ViewModels;
 
 namespace WpfGridControlTest01.Models
 {
@@ -16,6 +18,11 @@ namespace WpfGridControlTest01.Models
 
         public ProductType()
         {
+        }
+
+        public static implicit operator ProductType(MainViewModel v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

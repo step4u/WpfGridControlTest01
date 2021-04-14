@@ -19,12 +19,11 @@
         </Grid.RowDefinitions>
         <dxg:GridControl x:Name="gridctrl0"
                          ItemsSource="{Binding Products2}"
-                         SelectedItem="{Binding SelectedProduct}"
                          Grid.Row="1"
                          SelectionMode="None">
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="tableview0"
-                               AllowEditing="False"
+                               AllowEditing="True"
                                ShowTotalSummary="False"
                                ShowIndicator="False"
                                ShowGroupPanel="False"
@@ -33,7 +32,9 @@
                                IsRowCellMenuEnabled="False"
                                AllowColumnFiltering="False"
                                AllowColumnMoving="False"
-                               AllowSorting="False"/>
+                               AllowSorting="False"
+                               CellValueChanged="tableview0_CellValueChanged"
+                               />
             </dxg:GridControl.View>
             <dxg:GridColumn FieldName="Chk1" Header="CHK1" IsSmart="True" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
@@ -46,8 +47,9 @@
             <dxg:GridColumn FieldName="SelectedProdcutType" IsSmart="True" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:ComboBoxEditSettings
-                        ItemsSource="{Binding SelectedProduct.ProductTypes}"
-                        DisplayMember="TypeName"/>
+                        ItemsSource="{Binding PTypes}"
+                        DisplayMember="TypeName"
+                        />
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
         </dxg:GridControl>
