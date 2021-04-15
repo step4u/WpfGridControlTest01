@@ -215,7 +215,7 @@ namespace WpfGridControlTest01.ViewModels
             EnableBtnAdd = true;
             EnableBtnDel = true;
             EnableBtnReload = true;
-            EnableBtnApply = false;
+            EnableBtnApply = true;
             EnableBtnModify = true;
         }
 

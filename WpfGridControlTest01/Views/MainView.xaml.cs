@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DevExpress.Xpf.Bars;
+using DevExpress.Xpf.Grid;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -95,7 +97,7 @@ namespace WpfGridControlTest01.Views
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             //Products.Add(new Product()
-            //{
+            //{;
             //    BandWide = String.Format("{0}00", number),
             //    Freq = String.Format("{0}000", number),
             //    Chk1 = false,
@@ -106,8 +108,14 @@ namespace WpfGridControlTest01.Views
             viewmodel.testProduct2.BandWide = "9999";
 
             Product2 tmp2 = (Product2)testProducts222.Where(x => x.BandWide == "345").First();
+            Product2 tmp21 = (Product2)tmp2.Clone();
             testProducts23.Add((Product2)tmp2.Clone());
-            tmp2.BandWide = "33333";
+            int idx = testProducts23.IndexOf(tmp2);
+            int idx1 = testProducts222.IndexOf(tmp2);
+            bool b0 = tmp2.HasSameValues(tmp21);
+            bool b1 = tmp2.Equals(tmp21);
+            bool b3 = tmp2 == tmp21;
+            //tmp2.BandWide = "33333";
 
             viewmodel.testProduct2.SetValues("BandWide", "10000000");
 
@@ -243,7 +251,20 @@ namespace WpfGridControlTest01.Views
             int rowHandle = e.RowHandle;
             bool handled = e.Handled;
             var cell = e.Cell;
+        }
 
+        private void tableview0_ShowGridMenu(object sender, DevExpress.Xpf.Grid.GridMenuEventArgs e)
+        {
+            if (e.MenuInfo.Column.VisibleIndex == 4)
+            {
+                e.MenuInfo.Column.AllowEditing = DevExpress.Utils.DefaultBoolean.False;
+                BarCheckItem item1 = new BarCheckItem { Content = "Checked", IsChecked = true };
+                BarItemLinkActionBase.SetItemLinkIndex(item1, 0);
+                e.Customizations.Add(item1);
+                BarItemLinkSeparator item2 = new BarItemLinkSeparator();
+                BarItemLinkActionBase.SetItemLinkIndex(item2, 1);
+                e.Customizations.Add(item2);
+            }
         }
     }
 }
