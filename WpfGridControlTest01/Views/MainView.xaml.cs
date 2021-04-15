@@ -258,13 +258,20 @@ namespace WpfGridControlTest01.Views
             if (e.MenuInfo.Column.VisibleIndex == 4)
             {
                 e.MenuInfo.Column.AllowEditing = DevExpress.Utils.DefaultBoolean.False;
-                BarCheckItem item1 = new BarCheckItem { Content = "Checked", IsChecked = true };
-                BarItemLinkActionBase.SetItemLinkIndex(item1, 0);
-                e.Customizations.Add(item1);
+                BarButtonItem item0 = new BarButtonItem { Content="일괄 선택", Badge = };
+                item0.ItemClick += (s, ex) => { MessageBox.Show("clicked!!"); };
+                BarItemLinkActionBase.SetItemLinkIndex(item0, 0);
+                e.Customizations.Add(item0);
+
                 BarItemLinkSeparator item2 = new BarItemLinkSeparator();
                 BarItemLinkActionBase.SetItemLinkIndex(item2, 1);
                 e.Customizations.Add(item2);
+
+                BarCheckItem item1 = new BarCheckItem { Content = "Checked", IsChecked = true };
+                BarItemLinkActionBase.SetItemLinkIndex(item1, 2);
+                e.Customizations.Add(item1);
             }
         }
+
     }
 }
