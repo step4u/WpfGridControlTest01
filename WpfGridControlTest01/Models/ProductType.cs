@@ -9,20 +9,21 @@ namespace WpfGridControlTest01.Models
 
         public int Id {
             get { return GetValue<int>(); }
-            set { SetValue(value); }
+            set {
+                SetValue(value);
+                System.Diagnostics.Debug.WriteLine("set ProductType.Id: " + value);
+            }
         }
         public string TypeName {
             get { return GetValue<string>(); }
-            set { SetValue(value); }
+            set {
+                SetValue(value);
+                System.Diagnostics.Debug.WriteLine("set ProductType.TypeName: " + value);
+            }
         }
 
         public ProductType()
         {
-        }
-
-        public static implicit operator ProductType(MainViewModel v)
-        {
-            throw new NotImplementedException();
         }
     }
 }

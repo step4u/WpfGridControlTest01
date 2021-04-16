@@ -167,7 +167,7 @@ namespace WpfGridControlTest01.Views
         {
             Debug.WriteLine("Apply button pressed.", "Debug");
 
-            modifyProducts2 = Products2.Where(x => originProducts2.Any(y => y.HasSameValues(x)) == false).ToList();
+            //modifyProducts2 = Products2.Where(x => originProducts2.Any(y => y.HasSameValues(x)) == false).ToList();
 
             //this.ChangeUIStatus(ProgressingJob.IDLE);
         }
@@ -258,7 +258,7 @@ namespace WpfGridControlTest01.Views
             if (e.MenuInfo.Column.VisibleIndex == 4)
             {
                 e.MenuInfo.Column.AllowEditing = DevExpress.Utils.DefaultBoolean.False;
-                BarButtonItem item0 = new BarButtonItem { Content="일괄 선택", Badge = };
+                BarButtonItem item0 = new BarButtonItem { Content="일괄 선택" };
                 item0.ItemClick += (s, ex) => { MessageBox.Show("clicked!!"); };
                 BarItemLinkActionBase.SetItemLinkIndex(item0, 0);
                 e.Customizations.Add(item0);

@@ -91,19 +91,36 @@ namespace WpfGridControlTest01.ViewModels
             set { SetValue(value); }
         }
 
-        public ObservableCollection<ProductType> PTypes {
+        public ObservableCollection<ProductType> ProductTypes {
             get { return GetValue<ObservableCollection<ProductType>>(); }
             set { SetValue(value); }
         }
 
-        public ProductType SelectedPType {
-            get { return GetValue<ProductType>(); }
-            set { SetValue(value); }
+        string[] _Modes = new string[] { "가나다", "라마바", "사아자", "차카타", "파하" };
+        public string[] Modes {
+            get { return _Modes; }
+            set {
+                SetValue(ref _Modes, value);
+                System.Diagnostics.Debug.WriteLine("set Mode");
+            }
+        }
+
+        Dictionary<int, string> _Cates = new Dictionary<int, string>() { { 0,"ABCD" }, { 1,"EFGH"}, {2,"IJKL"}, { 3, "MNOP" }, { 4, "QRST" }, {5, "UVWX" }, { 6, "YZAB" } };
+        public Dictionary<int, string> Cates {
+            get { return _Cates; }
+            set { SetValue(ref _Cates, value); }
+        }
+
+        List<string> _Cates2 = new List<string>() { "123", "234", "345", "456", "789", "890" };
+        public List<string> Cates2 {
+            get { return _Cates2; }
+            set { SetValue(ref _Cates2, value); }
         }
 
         void ShowMessage()
         {
             MessageBoxService.Show("This is MainView!");
+            
         }
 
         void InitData()
@@ -163,19 +180,17 @@ namespace WpfGridControlTest01.ViewModels
                     }
                 };
 
-                PTypes = new ObservableCollection<ProductType>();
-                for (int i = 0; i < 9; i++)
+                ProductTypes = new ObservableCollection<ProductType>();
+                for (int i = 0; i < 7; i++)
                 {
-                    PTypes.Add(new ProductType()
+                    ProductTypes.Add(new ProductType()
                     {
                         Id = i + 1,
                         TypeName = string.Format("PType{0}", i + 1),
                     });
                 }
 
-                SelectedPType = PTypes[0];
-
-                for (int i = 5; i <= 9; i++)
+                for (int i = 5; i < 11; i++)
                 {
                     Products2.Add(new Product2()
                     {
@@ -183,7 +198,7 @@ namespace WpfGridControlTest01.ViewModels
                         Freq = string.Format("{0}000", i),
                         Chk1 = true,
                         Chk2 = false,
-                        SelectedProdcutType = PTypes[0]
+                        SelectedProdcutType = ProductTypes[i-5]
                     });
                 }
 
@@ -193,7 +208,7 @@ namespace WpfGridControlTest01.ViewModels
                     BandWide = "345",
                     Chk2 = true,
                     Freq = "20000",
-                    SelectedProdcutType = PTypes[0]
+                    SelectedProdcutType = ProductTypes[0]
                 };
 
                 testProducts2.Add(testProduct2);
@@ -234,5 +249,6 @@ namespace WpfGridControlTest01.ViewModels
             count++;
             TimerSec = count.ToString();
         }
+
     }
 }

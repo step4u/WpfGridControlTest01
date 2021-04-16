@@ -49,12 +49,43 @@
                     <dxe:CheckEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn FieldName="BandWide" IsSmart="True" HorizontalHeaderContentAlignment="Center"/>
-            <dxg:GridColumn FieldName="Chk2" IsSmart="True" HorizontalHeaderContentAlignment="Center"/>
-            <dxg:GridColumn FieldName="Freq" IsSmart="True" HorizontalHeaderContentAlignment="Center"/>
-            <dxg:GridColumn FieldName="SelectedProdcutType" Header="Procut Type" IsSmart="True" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn FieldName="BandWide" IsSmart="True" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:ComboBoxEditSettings ItemsSource="{Binding PTypes}" DisplayMember="TypeName"/>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn FieldName="Chk2" IsSmart="True" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn FieldName="Freq" IsSmart="True" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn FieldName="SelectedProdcutId" Header="Procut Type" IsSmart="True" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:ComboBoxEditSettings ItemsSource="{Binding ProductTypes}" DisplayMember="TypeName" ValueMember="Id" HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn FieldName="SelectedMode" Header="Mode" IsSmart="True" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:ComboBoxEditSettings ItemsSource="{Binding Path=Modes}" HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn FieldName="SelectedCate" Header="Category" IsSmart="True" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:ComboBoxEditSettings ItemsSource="{Binding Cates}"
+                                              DisplayMember="Value"
+                                              ValueMember="Key"
+                                              HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn FieldName="SelectedCate2" Header="Category2" IsSmart="True" HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:ComboBoxEditSettings ItemsSource="{Binding Cates2}"
+                                              HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
         </dxg:GridControl>
