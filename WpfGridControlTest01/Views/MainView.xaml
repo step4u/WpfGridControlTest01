@@ -21,7 +21,8 @@
         <dxg:GridControl x:Name="gridctrl0"
                          ItemsSource="{Binding Products2}"
                          Grid.Row="1"
-                         SelectionMode="None">
+                         SelectionChanged="gridctrl0_SelectionChanged"
+                         SelectionMode="Row">
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="tableview0"
                                Tag="Test Value"
@@ -36,6 +37,7 @@
                                AllowColumnMoving="False"
                                AllowSorting="False"
                                AllowFixedColumnMenu="True"
+                               PreviewMouseLeftButtonDown="tableview0_PreviewMouseLeftButtonDown"
                                ShowGridMenu="tableview0_ShowGridMenu"
                                CellValueChanged="tableview0_CellValueChanged">
                     <!--<dxg:TableView.RowCellMenuCustomizations>

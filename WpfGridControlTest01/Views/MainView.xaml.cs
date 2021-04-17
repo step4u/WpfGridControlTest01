@@ -255,6 +255,7 @@ namespace WpfGridControlTest01.Views
 
         private void tableview0_ShowGridMenu(object sender, DevExpress.Xpf.Grid.GridMenuEventArgs e)
         {
+            // 특정 컬럼 컨텍스트 메뉴 팝업, 수정모드 금지 등 여러가지 가능
             if (e.MenuInfo.Column.VisibleIndex == 4)
             {
                 e.MenuInfo.Column.AllowEditing = DevExpress.Utils.DefaultBoolean.False;
@@ -273,5 +274,37 @@ namespace WpfGridControlTest01.Views
             }
         }
 
+        private void gridctrl0_SelectionChanged(object sender, GridSelectionChangedEventArgs e)
+        {
+            // 본인 데이터가 아니면 선택 못하도록 하려고 했으나 이 이벤트는 활용하기 힘듬
+            var tmp0 = e.ControllerRow;
+            var tmp1 = e.Action;
+            var tmp2 = e.Source.SelectedRows;
+        }
+
+        private void tableview0_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var info = tableview0.CalcHitInfo((DependencyObject)e.OriginalSource);
+            if (info.RowHandle < 0)
+            {
+                return;
+            }
+
+            var row = (Product2)gridctrl0.GetRow(info.RowHandle);
+
+            if (row.BandWide == "600" || row.BandWide == "900")
+            {
+                gridctrl0.SelectedItems.Remove(row);
+                return;
+            }
+            else
+            {
+                base.OnPreviewMouseLeftButtonDown(e);
+            }
+
+            //if (info.Column != null && Equals(info.Column.FieldName, "ButtonColumn"))
+            //    return;
+            //else base.OnPreviewMouseLeftButtonDown(e);
+        }
     }
 }
