@@ -7,12 +7,15 @@
     xmlns:ViewModels="clr-namespace:WpfGridControlTest01.ViewModels"
     xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
-    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
     x:Class="WpfGridControlTest01.Views.MainView"
     mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="600">
     <UserControl.DataContext>
         <ViewModels:MainViewModel/>
     </UserControl.DataContext>
+    <dxmvvm:Interaction.Behaviors>
+        <dx:DXMessageBoxService/>
+    </dxmvvm:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
@@ -152,5 +155,9 @@
                    Text="{Binding TimerSec}"
                    FontWeight="Bold"
                    HorizontalAlignment="Right" Margin="0,0,5,0" TextWrapping="Wrap" VerticalAlignment="Center" Grid.Row="0"/>
+        <Button x:Name="btnShoMessage"
+                Content="메시지"
+                Command="{Binding ShowMessageCommand}"
+                HorizontalAlignment="Left" Margin="469,8,0,0" VerticalAlignment="Top" Width="75" Grid.Row="0"/>
     </Grid>
 </UserControl>

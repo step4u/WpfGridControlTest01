@@ -1,8 +1,10 @@
 ﻿using DevExpress.Mvvm;
+using DevExpress.Xpf.Core;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Timers;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WpfGridControlTest01.Classes;
@@ -122,8 +124,9 @@ namespace WpfGridControlTest01.ViewModels
 
         void ShowMessage()
         {
-            MessageBoxService.Show("This is MainView!");
-            
+            // MessageBoxService.Show("This is MainView!", "경고!!", System.Windows.MessageBoxButton.YesNo);
+            ThemedMessageBox.Show(title: "경고!!", text: "테마 메시지 박스!!", messageBoxButtons: MessageBoxButton.OKCancel, icon: MessageBoxImage.Exclamation);
+            // MessageBox.Show("기본 윈도우 메시지 박스!!", "경고!!", MessageBoxButton.OKCancel);
         }
 
         void InitData()

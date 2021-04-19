@@ -1,4 +1,5 @@
-﻿using DevExpress.Xpf.Bars;
+﻿using DevExpress.Mvvm;
+using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.Grid;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,7 @@ namespace WpfGridControlTest01.Views
 
         DoJobs dojobs;
         ProgressingJob progressingJob = ProgressingJob.IDLE;
+
 
         public MainView()
         {
