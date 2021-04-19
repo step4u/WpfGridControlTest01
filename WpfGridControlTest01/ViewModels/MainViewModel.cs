@@ -1,15 +1,18 @@
 ﻿using DevExpress.Mvvm;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Timers;
 using System.Windows.Controls;
 using System.Windows.Input;
+using WpfGridControlTest01.Classes;
 using WpfGridControlTest01.Models;
 
 namespace WpfGridControlTest01.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+        private string MyId = "ATW";
         public ICommand ShowMessageCommand { get; private set; }
         IMessageBoxService MessageBoxService { get { return GetService<IMessageBoxService>(); } }
 
@@ -127,92 +130,108 @@ namespace WpfGridControlTest01.ViewModels
         {
             if (IsInDesignMode)
             {
-                Products = new ObservableCollection<Product>();
-                Products1 = new ObservableCollection<Product1>();
+                //Products = new ObservableCollection<Product>();
+                //Products1 = new ObservableCollection<Product1>();
                 Products2 = new ObservableCollection<Product2>();
             }
             else
             {
-                Products = new ObservableCollection<Product>();
-                Products1 = new ObservableCollection<Product1>();
+                //Products = new ObservableCollection<Product>();
+                //Products1 = new ObservableCollection<Product1>();
                 Products2 = new ObservableCollection<Product2>();
                 // SelectProductType = new Product2();
 
-                for (int i = 1; i <= 5; i++)
-                {
-                    Products.Add(new Product()
-                    {
-                        BandWide = string.Format("{0}00", i),
-                        Freq = string.Format("{0}000", i),
-                        Chk1 = true,
-                        Chk2 = false
-                    });
-                }
+                //for (int i = 1; i <= 5; i++)
+                //{
+                //    Products.Add(new Product()
+                //    {
+                //        BandWide = string.Format("{0}00", i),
+                //        Freq = string.Format("{0}000", i),
+                //        Chk1 = true,
+                //        Chk2 = false
+                //    });
+                //}
 
-                for (int i = 3; i <= 7; i++)
-                {
-                    Products1.Add(new Product1()
-                    {
-                        BandWide = string.Format("{0}00", i),
-                        Freq = string.Format("{0}000", i),
-                        Chk1 = true,
-                        Chk2 = false
-                    });
-                }
+                //for (int i = 3; i <= 7; i++)
+                //{
+                //    Products1.Add(new Product1()
+                //    {
+                //        BandWide = string.Format("{0}00", i),
+                //        Freq = string.Format("{0}000", i),
+                //        Chk1 = true,
+                //        Chk2 = false
+                //    });
+                //}
 
-                List<ProductType> productTypes = new List<ProductType>()
-                {
-                    new ProductType() {
-                        Id = 1,
-                        TypeName = "Type1"
-                    },
-                    new ProductType() {
-                        Id = 2,
-                        TypeName = "Type2"
-                    },
-                    new ProductType() {
-                        Id = 3,
-                        TypeName = "Type3"
-                    },
-                    new ProductType() {
-                        Id = 4,
-                        TypeName = "Type4"
-                    }
-                };
+                //List<ProductType> productTypes = new List<ProductType>()
+                //{
+                //    new ProductType() {
+                //        Id = 1,
+                //        TypeName = "Type1"
+                //    },
+                //    new ProductType() {
+                //        Id = 2,
+                //        TypeName = "Type2"
+                //    },
+                //    new ProductType() {
+                //        Id = 3,
+                //        TypeName = "Type3"
+                //    },
+                //    new ProductType() {
+                //        Id = 4,
+                //        TypeName = "Type4"
+                //    }
+                //};
 
-                ProductTypes = new ObservableCollection<ProductType>();
-                for (int i = 0; i < 7; i++)
-                {
-                    ProductTypes.Add(new ProductType()
-                    {
-                        Id = i + 1,
-                        TypeName = string.Format("PType{0}", i + 1),
-                    });
-                }
+
+
+                var PTypes = Extensions.strTypes.ToDictionary();
+
+                //ProductTypes = new ObservableCollection<ProductType>();
+                //for (int i = 0; i < 7; i++)
+                //{
+                //    ProductTypes.Add(new ProductType()
+                //    {
+                //        Id = i + 1,
+                //        TypeName = string.Format("PType{0}", i + 1),
+                //    });
+                //}
 
                 for (int i = 5; i < 11; i++)
                 {
+                    bool isMine = false;
+                    bool chk1 = false;
+                    bool chk2 = false;
+
+                    if ((i % 2) == 0)
+                    {
+                        isMine = true;
+                        chk1 = true;
+                        chk2 = true;
+                    }
+
                     Products2.Add(new Product2()
                     {
+                        IsMine = isMine,
                         BandWide = string.Format("{0}00", i),
                         Freq = string.Format("{0}000", i),
-                        Chk1 = true,
-                        Chk2 = false,
-                        SelectedProdcutType = ProductTypes[i-5]
+                        Chk1 = chk1,
+                        Chk2 = chk2,
+                        SelectedProdcutId = i-5
                     });
                 }
 
 
-                testProduct2 = new Product2() {
-                    Chk1 = false,
-                    BandWide = "345",
-                    Chk2 = true,
-                    Freq = "20000",
-                    SelectedProdcutType = ProductTypes[0]
-                };
+                //testProduct2 = new Product2() {
+                //    Chk1 = false,
+                //    BandWide = "345",
+                //    Chk2 = true,
+                //    Freq = "20000",
+                //    SelectedProdcutType = ProductTypes[0]
+                //};
 
-                testProducts2.Add(testProduct2);
-                testProducts22.Add(testProduct2);
+                //testProducts2.Add(testProduct2);
+                //testProducts22.Add(testProduct2);
             }
         }
 

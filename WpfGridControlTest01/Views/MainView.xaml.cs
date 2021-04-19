@@ -167,6 +167,8 @@ namespace WpfGridControlTest01.Views
         {
             Debug.WriteLine("Apply button pressed.", "Debug");
 
+            int[] tmp = gridctrl0.GetSelectedRowHandles();
+
             //modifyProducts2 = Products2.Where(x => originProducts2.Any(y => y.HasSameValues(x)) == false).ToList();
 
             //this.ChangeUIStatus(ProgressingJob.IDLE);
@@ -292,19 +294,42 @@ namespace WpfGridControlTest01.Views
 
             var row = (Product2)gridctrl0.GetRow(info.RowHandle);
 
-            if (row.BandWide == "600" || row.BandWide == "900")
+            if (row.IsMine)
             {
-                gridctrl0.SelectedItems.Remove(row);
-                return;
+                base.OnPreviewMouseLeftButtonDown(e);
             }
             else
             {
-                base.OnPreviewMouseLeftButtonDown(e);
+                gridctrl0.SelectedItems.Remove(row);
+                return;
             }
 
             //if (info.Column != null && Equals(info.Column.FieldName, "ButtonColumn"))
             //    return;
             //else base.OnPreviewMouseLeftButtonDown(e);
+        }
+
+        private void tableview0_ShowingEditor(object sender, ShowingEditorEventArgs e)
+        {
+            e.Cancel = true;
+
+            var RowHandle = e.RowHandle;
+            var row0 = gridctrl0.GetRow(RowHandle);
+            var row1 = e.Row;
+
+            var row = (Product2)e.Row;
+            if (row.IsMine)
+            {
+                System.Diagnostics.Debug.WriteLine("ShowingEditorEvent Raised : It's Mine.");
+                // e.Column.AllowEditing = DevExpress.Utils.DefaultBoolean.True;
+                e.Cancel = false;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("ShowingEditorEvent Raised : It's not Mine.");
+                // e.Column.AllowEditing = DevExpress.Utils.DefaultBoolean.False;
+                return;
+            }
         }
     }
 }

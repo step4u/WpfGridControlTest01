@@ -12,6 +12,12 @@ namespace WpfGridControlTest01.Models
         {
         }
 
+        bool _IsMine = false;
+        public bool IsMine {
+            get { return _IsMine; }
+            set { SetValue(ref _IsMine, value); }
+        }
+
         bool _Chk1;
         public bool Chk1 {
             get { return _Chk1; }

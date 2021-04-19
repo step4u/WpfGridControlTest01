@@ -20,5 +20,16 @@ namespace WpfGridControlTest01.Classes
         //{
         //    return list.Select(item => (T)item.Equals(T)).ToList();
         //}
+
+        public static Dictionary<int, T> ToDictionary<T>(this IEnumerable<T> array)
+        {
+            return array.Select((v, i) => new { Key = i, Value = v })
+                .ToDictionary(o => o.Key, o => o.Value);
+        }
+
+
+        public static string[] strTypes = new string[] {
+                    "ProductType1", "ProductType2", "ProductType3", "ProductType4", "ProductType5"
+                };
     }
 }

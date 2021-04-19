@@ -26,7 +26,6 @@
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="tableview0"
                                Tag="Test Value"
-                               AllowEditing="True"
                                ShowTotalSummary="False"
                                ShowIndicator="False"
                                ShowGroupPanel="False"
@@ -39,6 +38,7 @@
                                AllowFixedColumnMenu="True"
                                PreviewMouseLeftButtonDown="tableview0_PreviewMouseLeftButtonDown"
                                ShowGridMenu="tableview0_ShowGridMenu"
+                               ShowingEditor="tableview0_ShowingEditor"
                                CellValueChanged="tableview0_CellValueChanged">
                     <!--<dxg:TableView.RowCellMenuCustomizations>
                         <dxb:BarButtonItem Name="deleteRowItem" Content="Delete"/>
@@ -46,20 +46,52 @@
                     </dxg:TableView.RowCellMenuCustomizations>-->
                 </dxg:TableView>
             </dxg:GridControl.View>
-            <dxg:GridColumn FieldName="Chk1" Header="CHK1" IsSmart="True" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.EditSettings>
+            <dxg:GridColumn FieldName="IsMine"
+                            Header="Mine"
+                            IsSmart="True"
+                            HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:TextEdit x:Name="PART_Editor"
+                                      HorizontalAlignment="Center" />
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+
+            <dxg:GridColumn FieldName="Chk1"
+                            Header="CHK1"
+                            IsSmart="True"
+                            HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:CheckEdit x:Name="PART_Editor"
+                                       HorizontalAlignment="Center" />
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+                <!--<dxg:GridColumn.EditSettings>
                     <dxe:CheckEditSettings HorizontalContentAlignment="Center"/>
-                </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn.EditSettings>-->
             </dxg:GridColumn>
-            <dxg:GridColumn FieldName="BandWide" IsSmart="True" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn FieldName="BandWide"
+                            IsSmart="True"
+                            HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn FieldName="Chk2" IsSmart="True" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.EditSettings>
+            <dxg:GridColumn FieldName="Chk2"
+                            Header="CHK2"
+                            IsSmart="True"
+                            HorizontalHeaderContentAlignment="Center">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:CheckEdit x:Name="PART_Editor"
+                                       HorizontalAlignment="Center" />
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+                <!--<dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
-                </dxg:GridColumn.EditSettings>
+                </dxg:GridColumn.EditSettings>-->
             </dxg:GridColumn>
             <dxg:GridColumn FieldName="Freq" IsSmart="True" HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
