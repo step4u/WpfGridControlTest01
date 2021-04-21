@@ -289,21 +289,25 @@ namespace WpfGridControlTest01.Views
         private void tableview0_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             var info = tableview0.CalcHitInfo((DependencyObject)e.OriginalSource);
+
             if (info.RowHandle < 0)
             {
-                return;
+                gridctrl0.SelectedItems.Clear();
             }
 
-            var row = (Product2)gridctrl0.GetRow(info.RowHandle);
+            int[] selectedRowHandles = gridctrl0.GetSelectedRowHandles();
 
-            if (row.IsMine)
+            for (int i = 0; i < selectedRowHandles.Length; i++)
             {
-                base.OnPreviewMouseLeftButtonDown(e);
-            }
-            else
-            {
-                gridctrl0.SelectedItems.Remove(row);
-                return;
+                var row = (Product2)gridctrl0.GetRow(selectedRowHandles[i]);
+                if (row.IsMine)
+                {
+                    base.OnPreviewMouseLeftButtonDown(e);
+                }
+                else
+                {
+                    gridctrl0.SelectedItems.Remove(row);
+                }
             }
 
             //if (info.Column != null && Equals(info.Column.FieldName, "ButtonColumn"))
