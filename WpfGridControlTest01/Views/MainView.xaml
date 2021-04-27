@@ -19,6 +19,114 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Dictionary1.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <ControlTemplate x:Key="CheckBoxControlTemplate1" TargetType="{x:Type CheckBox}">
+                <Grid x:Name="Root" Background="Transparent" Margin="{TemplateBinding Padding}" dx:BlendHelper2.ThemeInfo="Core\Core\Themes\Office2019DarkGray\StandardControls\CheckBox.xaml;17;12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <VisualStateManager.VisualStateGroups>
+                        <VisualStateGroup x:Name="FocusStates">
+                            <VisualState x:Name="Focused">
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="IsFocused"/>
+                                </Storyboard>
+                            </VisualState>
+                            <VisualState x:Name="Unfocused"/>
+                        </VisualStateGroup>
+                    </VisualStateManager.VisualStateGroups>
+                    <Grid x:Name="Field" Grid.ColumnSpan="1" Grid.Column="0" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Height="14" Margin="0,1" dx:BlendHelper2.ThemeInfo="Core\Core\Themes\Office2019DarkGray\StandardControls\CheckBox.xaml;22;14" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Width="14">
+                        <dx:DXBorder x:Name="IsDefault" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" EnableDPICorrection="{x:Null}" dx:BlendHelper2.ThemeInfo="Core\Core\Themes\Office2019DarkGray\StandardControls\CheckBox.xaml;23;16"/>
+                        <dx:DXBorder x:Name="IsFocused" BorderBrush="#FF0072C6" BorderThickness="{TemplateBinding BorderThickness}" EnableDPICorrection="{x:Null}" Opacity="0" dx:BlendHelper2.ThemeInfo="Core\Core\Themes\Office2019DarkGray\StandardControls\CheckBox.xaml;24;16" Uid="@BorderBrush=Focused"/>
+                        <Path x:Name="Indeterminate" dx:BlendHelper2.ThemeInfo="Core\Core\Themes\Office2019DarkGray\StandardControls\CheckBox.xaml;25;16" Visibility="Collapsed">
+                            <Path.Style>
+                                <Style TargetType="{x:Type Path}">
+                                    <Setter Property="Data" Value="F1M0,0L8,0 8,8 0,8 0,0z"/>
+                                    <Setter Property="Fill" Value="#FF262626"/>
+                                    <Setter Property="Height" Value="8"/>
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="Margin" Value="2"/>
+                                    <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                    <Setter Property="Stretch" Value="Fill"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="Width" Value="8"/>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                        <Path x:Name="Checked" dx:BlendHelper2.ThemeInfo="Core\Core\Themes\Office2019DarkGray\StandardControls\CheckBox.xaml;26;16" Visibility="Collapsed">
+                            <Path.Style>
+                                <Style TargetType="{x:Type Path}">
+                                    <Setter Property="Data" Value="F1M0,3L0,5 3,8 8,3 8,1 3,6 0,3z"/>
+                                    <Setter Property="Fill" Value="#FF262626"/>
+                                    <Setter Property="Height" Value="8"/>
+                                    <Setter Property="HorizontalAlignment" Value="Center"/>
+                                    <Setter Property="Margin" Value="2"/>
+                                    <Setter Property="SnapsToDevicePixels" Value="True"/>
+                                    <Setter Property="Stretch" Value="Fill"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="Width" Value="8"/>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Grid>
+                    <ContentPresenter x:Name="contentPresenter" Grid.ColumnSpan="1" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="1" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="4,0,0,0" RecognizesAccessKey="True" dx:BlendHelper2.ThemeInfo="Core\Core\Themes\Office2019DarkGray\StandardControls\CheckBox.xaml;28;14" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Fill" TargetName="Checked" Value="Black"/>
+                        <Setter Property="Fill" TargetName="Indeterminate" Value="Black"/>
+                        <Setter Property="Background" TargetName="IsDefault" Value="#FF989694"/>
+                        <Setter Property="BorderBrush" TargetName="IsDefault" Value="#FF444444"/>
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="True">
+                        <Setter Property="Fill" TargetName="Checked" Value="Black"/>
+                        <Setter Property="Fill" TargetName="Indeterminate" Value="Black"/>
+                        <Setter Property="Background" TargetName="IsDefault" Value="#FF898785"/>
+                        <Setter Property="BorderBrush" TargetName="IsDefault" Value="#FF444444"/>
+                    </Trigger>
+                    <Trigger Property="IsFocused" Value="True">
+                        <Setter Property="Opacity" TargetName="IsFocused" Value="1"/>
+                    </Trigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsMouseOver" Value="True"/>
+                            <Condition Property="IsFocused" Value="True"/>
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Opacity" TargetName="IsFocused" Value="1"/>
+                    </MultiTrigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsPressed" Value="True"/>
+                            <Condition Property="IsFocused" Value="True"/>
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Opacity" TargetName="IsFocused" Value="1"/>
+                    </MultiTrigger>
+                    <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Opacity" TargetName="Root" Value="0.38"/>
+                    </Trigger>
+                    <Trigger Property="dx:ThemeManager.IsTouchEnabled" Value="True">
+                        <Setter Property="Height" TargetName="Checked" Value="16"/>
+                        <Setter Property="Width" TargetName="Checked" Value="16"/>
+                        <Setter Property="Height" TargetName="Field" Value="28"/>
+                        <Setter Property="Width" TargetName="Field" Value="28"/>
+                        <Setter Property="Height" TargetName="Indeterminate" Value="16"/>
+                        <Setter Property="Width" TargetName="Indeterminate" Value="16"/>
+                    </Trigger>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Visibility" TargetName="Checked" Value="Visible"/>
+                    </Trigger>
+                    <Trigger Property="IsChecked" Value="{x:Null}">
+                        <Setter Property="Visibility" TargetName="Indeterminate" Value="Visible"/>
+                    </Trigger>
+                    <Trigger Property="FlowDirection" Value="RightToLeft">
+                        <Setter Property="LayoutTransform" TargetName="Field">
+                            <Setter.Value>
+                                <ScaleTransform CenterY="0.5" CenterX="0.5" ScaleY="1" ScaleX="-1"/>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
     <dxmvvm:Interaction.Behaviors>
@@ -97,21 +205,7 @@
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
                         <!--<CheckBox x:Name="PART_Editor" HorizontalAlignment="Center" IsChecked="{Binding RowData.Row.Chk2}"/>-->
-                        <dxe:CheckEdit x:Name="PART_Editor" HorizontalAlignment="Center">
-                            <dxe:CheckEdit.Resources>
-                                <ControlTemplate x:Key="CheckEditControlTemplate1" TargetType="{x:Type dxe:CheckEdit}">
-                                    <dxe:EditorControl x:Name="PART_Content" Focusable="False" dx:BlendHelper2.ThemeInfo="Core\Core\Editors\Themes\Office2019Black\CheckEdit\CheckEditModes.xaml;102;6" Template="{TemplateBinding ActualEditorControlTemplate}"/>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="EditMode" Value="InplaceInactive">
-                                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                                        </Trigger>
-                                        <Trigger Property="EditMode" Value="InplaceActive">
-                                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </dxe:CheckEdit.Resources>
-                        </dxe:CheckEdit>
+                        <dxe:CheckEdit x:Name="PART_Editor" HorizontalAlignment="Center" Template="{DynamicResource CheckBoxControlTemplate2}" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
                 <!--<dxg:GridColumn.EditSettings>
@@ -168,7 +262,6 @@
                 IsEnabled="{Binding EnableBtnModify}"
                 Click="btnModify_Click"
                 HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Width="75" Grid.Row="0"/>
-        <dxe:CheckEdit Margin="344,8,240,7" BorderBrush="White" />
 
         <Button x:Name="BtnApply"
                 Content="{Binding BtnApply}"
@@ -183,5 +276,7 @@
                 Content="메시지"
                 Command="{Binding ShowMessageCommand}"
                 HorizontalAlignment="Left" Margin="469,8,0,0" VerticalAlignment="Top" Width="75" Grid.Row="0"/>
+        <dxe:CheckEdit HorizontalAlignment="Left" Margin="338,10,0,0" VerticalAlignment="Top"/>
+        <CheckBox HorizontalAlignment="Left" Margin="357,14,0,0" VerticalAlignment="Top" Template="{DynamicResource CheckBoxControlTemplate1}"/>
     </Grid>
 </UserControl>
