@@ -73,6 +73,18 @@ namespace WpfGridControlTest01.Views
             };
             tmp.ToString();
             // Products.CollectionChanged += Products_CollectionChanged;
+
+
+            Product3 tmpProduct3 = new Product3() { IsMine = true, Chk1 = true, BandWide = "100", Chk2 = true, Freq = "200" };
+            var tmpStruct = tmpProduct3.InputStruct<StTest01>();
+
+            //StTest01 st = new StTest01();
+            //var tmpType = st.GetType();
+            //var tmpProperty = st.GetType().GetMembers();
+            //foreach (var p in st.GetType().GetProperties())
+            //{
+            //    // System.Diagnostics.Debug.WriteLine(p.Name + " : ");
+            //}
         }
 
         private void Products_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

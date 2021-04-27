@@ -7,7 +7,8 @@
     xmlns:ViewModels="clr-namespace:WpfGridControlTest01.ViewModels"
     xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid" 
     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
-    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars" xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
     x:Class="WpfGridControlTest01.Views.MainView"
     mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="600">
     <UserControl.DataContext>
@@ -88,8 +89,22 @@
                             HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:CheckEdit x:Name="PART_Editor"
-                                       HorizontalAlignment="Center" />
+                        <!--<CheckBox x:Name="PART_Editor" HorizontalAlignment="Center" IsChecked="{Binding RowData.Row.Chk2}"/>-->
+                        <dxe:CheckEdit x:Name="PART_Editor" HorizontalAlignment="Center">
+                            <dxe:CheckEdit.Resources>
+                                <ControlTemplate x:Key="CheckEditControlTemplate1" TargetType="{x:Type dxe:CheckEdit}">
+                                    <dxe:EditorControl x:Name="PART_Content" Focusable="False" dx:BlendHelper2.ThemeInfo="Core\Core\Editors\Themes\Office2019Black\CheckEdit\CheckEditModes.xaml;102;6" Template="{TemplateBinding ActualEditorControlTemplate}"/>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="EditMode" Value="InplaceInactive">
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Trigger>
+                                        <Trigger Property="EditMode" Value="InplaceActive">
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </dxe:CheckEdit.Resources>
+                        </dxe:CheckEdit>
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
                 <!--<dxg:GridColumn.EditSettings>
@@ -146,6 +161,8 @@
                 IsEnabled="{Binding EnableBtnModify}"
                 Click="btnModify_Click"
                 HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Width="75" Grid.Row="0"/>
+        <dxe:CheckEdit Margin="344,8,240,7" BorderBrush="White" />
+
         <Button x:Name="BtnApply"
                 Content="{Binding BtnApply}"
                 IsEnabled="{Binding EnableBtnApply}"

@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
+using System.Runtime.InteropServices;
+using WpfGridControlTest01.Classes;
 
 namespace WpfGridControlTest01.Models
 {
@@ -117,6 +119,39 @@ namespace WpfGridControlTest01.Models
         {
             this.GetType().GetProperty(propertyName).SetValue(this, value);
         }
+
+        public T InputStruct<T>() where T : struct
+        {
+            T stuff = new T();
+            var properties = this.GetType().GetProperties();
+            foreach (var p in properties)
+            {
+                // var name0 = stuff.GetType().GetField("BandWide");
+                // var name = stuff.GetType().GetField(p.Name).GetValue(stuff).GetType().Name;
+                var name = stuff.GetType().GetField(p.Name).FieldType.Name;
+                switch (name)
+                {
+                    case "Byte":
+                        stuff.GetType().GetField(p.Name).SetValue(stuff, Convert.ToByte(p.GetValue(this)));
+                        break;
+                    case "Char[]":
+                        stuff.GetType().GetField(p.Name).SetValue(stuff, p.GetValue(this).ToString().ToCharArray());
+                        break;
+                }
+            }
+            return stuff;
+        }
+
+        //public T InputClass<T>(object st) where T : struct
+        //{
+        //    var properties = st.GetType().GetProperties();
+        //    foreach (var property in properties)
+        //    {
+
+        //        // this.GetType().GetProperty(property.Name).SetValue(this, );
+        //    }
+        //    return stuff;
+        //}
 
         public bool HasSameValues(Product2 other)
         {
