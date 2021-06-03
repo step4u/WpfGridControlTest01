@@ -23,12 +23,21 @@ namespace WpfGridControlTest01
         public MainWindow()
         {
             InitializeComponent();
-            this.Closing += MainWindow_Closing;
+
+            this.PreviewMouseLeftButtonDown += MainWindow_PreviewMouseLeftButtonDown;
+
+            //this.Closing += MainWindow_Closing;
         }
 
-        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void MainWindow_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            
+            Point relatedPosition = e.MouseDevice.GetPosition(this);
+            Point point = PointFromScreen(relatedPosition);
         }
+
+        //private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        //{
+
+        //}
     }
 }

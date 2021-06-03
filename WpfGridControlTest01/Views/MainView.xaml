@@ -145,7 +145,7 @@
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="tableview0"
                                Tag="Test Value"
-                               EnableSelectedRowAppearance="False"
+                               EnableSelectedRowAppearance="True"
                                ShowTotalSummary="False"
                                ShowIndicator="True"
                                ShowGroupPanel="False"
@@ -157,6 +157,7 @@
                                AllowSorting="False"
                                AllowFixedColumnMenu="True"
                                PreviewMouseLeftButtonDown="tableview0_PreviewMouseLeftButtonDown"
+                               RowDoubleClick="tableview0_RowDoubleClick"
                                ShowGridMenu="tableview0_ShowGridMenu"
                                ShowingEditor="tableview0_ShowingEditor"
                                CellValueChanged="tableview0_CellValueChanged">
@@ -213,12 +214,19 @@
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>-->
             </dxg:GridColumn>
-            <dxg:GridColumn FieldName="Freq" IsSmart="True" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn FieldName="Freq"
+                            IsSmart="True"
+                            HorizontalHeaderContentAlignment="Center"
+                            AllowEditing="True">
                 <dxg:GridColumn.EditSettings>
                     <dxe:TextEditSettings HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn FieldName="SelectedProdcutId" Header="Procut Type" IsSmart="True" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn FieldName="SelectedProdcutId"
+                            Header="Procut Type"
+                            IsSmart="True"
+                            AllowEditing="True"
+                            HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:ComboBoxEditSettings ItemsSource="{Binding ProductTypes}" DisplayMember="TypeName" ValueMember="Id" HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>

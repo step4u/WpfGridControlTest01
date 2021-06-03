@@ -12,6 +12,7 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using WpfGridControlTest01.Classes;
 using WpfGridControlTest01.Models;
 using WpfGridControlTest01.ViewModels;
@@ -54,8 +55,16 @@ namespace WpfGridControlTest01.Views
             InitializeComponent();
 
             this.Loaded += MainView_Loaded;
+            this.Unloaded += MainView_Unloaded;
         }
 
+        private void MainView_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (popup != null)
+            {
+                popup.Close();
+            }
+        }
 
         MainViewModel viewmodel;
         private void MainView_Loaded(object sender, RoutedEventArgs e)
@@ -298,9 +307,16 @@ namespace WpfGridControlTest01.Views
             var tmp2 = e.Source.SelectedRows;
         }
 
+
+        Point point;
         private void tableview0_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            // MainWindow mainWin = Application.Current.MainWindow as MainWindow;
+
             var info = tableview0.CalcHitInfo((DependencyObject)e.OriginalSource);
+
+            Point position = e.MouseDevice.GetPosition(this);
+            point = PointToScreen(position);
 
             if (info.RowHandle < 0)
             {
@@ -347,6 +363,28 @@ namespace WpfGridControlTest01.Views
                 System.Diagnostics.Debug.WriteLine("ShowingEditorEvent Raised : It's not Mine.");
                 // e.Column.AllowEditing = DevExpress.Utils.DefaultBoolean.False;
                 return;
+            }
+        }
+
+
+        PopUp popup;
+        private void tableview0_RowDoubleClick(object sender, RowDoubleClickEventArgs e)
+        {
+            var hitInfo = e.HitInfo;
+            string headerCaption = hitInfo.Column.HeaderCaption.ToString();
+            int rowHandle = hitInfo.RowHandle;
+
+            if (headerCaption == "Freq")
+            {
+                Product2 row = (Product2)gridctrl0.GetRow(rowHandle);
+
+                popup = new PopUp();
+                popup.txtBox.Text = row.Freq;
+                // popup.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+                popup.parent = this;
+                popup.Top = point.Y - popup.Height - 10;
+                popup.Left = point.X - popup.Width/2;
+                popup.Show();
             }
         }
     }
