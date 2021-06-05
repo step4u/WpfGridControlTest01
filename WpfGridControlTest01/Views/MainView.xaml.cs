@@ -280,7 +280,7 @@ namespace WpfGridControlTest01.Views
 
         private void tableview0_ShowGridMenu(object sender, DevExpress.Xpf.Grid.GridMenuEventArgs e)
         {
-            // 특정 컬럼 컨텍스트 메뉴 팝업, 수정모드 금지 등 여러가지 가능
+            // 특정 컬럼 컨텍스트 메뉴 팝업
             if (e.MenuInfo.Column.VisibleIndex == 4)
             {
                 e.MenuInfo.Column.AllowEditing = DevExpress.Utils.DefaultBoolean.False;
@@ -302,9 +302,9 @@ namespace WpfGridControlTest01.Views
         private void gridctrl0_SelectionChanged(object sender, GridSelectionChangedEventArgs e)
         {
             // 본인 데이터가 아니면 선택 못하도록 하려고 했으나 이 이벤트는 활용하기 힘듬
-            var tmp0 = e.ControllerRow;
-            var tmp1 = e.Action;
-            var tmp2 = e.Source.SelectedRows;
+            //var tmp0 = e.ControllerRow;
+            //var tmp1 = e.Action;
+            //var tmp2 = e.Source.SelectedRows;
         }
 
 
@@ -345,24 +345,28 @@ namespace WpfGridControlTest01.Views
 
         private void tableview0_ShowingEditor(object sender, ShowingEditorEventArgs e)
         {
-            e.Cancel = true;
+            // 에디터모드 진입 여부 처리
 
-            var RowHandle = e.RowHandle;
-            var row0 = gridctrl0.GetRow(RowHandle);
-            var row1 = e.Row;
+            //var RowHandle = e.RowHandle;
+            //var row0 = gridctrl0.GetRow(RowHandle);
+            //var row1 = (Product2)e.Row;
 
-            var row = (Product2)e.Row;
-            if (row.IsMine)
+            //var row = (Product2)e.Row;
+            //if (row.IsMine)
+            //{
+            //    System.Diagnostics.Debug.WriteLine("ShowingEditorEvent Raised : It's Mine.");
+            //    // e.Column.AllowEditing = DevExpress.Utils.DefaultBoolean.True;
+            //    e.Cancel = false;
+            //}
+            //else
+            //{
+            //    System.Diagnostics.Debug.WriteLine("ShowingEditorEvent Raised : It's not Mine.");
+            //    // e.Column.AllowEditing = DevExpress.Utils.DefaultBoolean.False;
+            //    e.Cancel = true;
+            //}
+            if (e.Column.FieldName == "Freq")
             {
-                System.Diagnostics.Debug.WriteLine("ShowingEditorEvent Raised : It's Mine.");
-                // e.Column.AllowEditing = DevExpress.Utils.DefaultBoolean.True;
-                e.Cancel = false;
-            }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine("ShowingEditorEvent Raised : It's not Mine.");
-                // e.Column.AllowEditing = DevExpress.Utils.DefaultBoolean.False;
-                return;
+                e.Cancel = !(bool)gridctrl0.GetCellValue(e.RowHandle, "IsMine");
             }
         }
 

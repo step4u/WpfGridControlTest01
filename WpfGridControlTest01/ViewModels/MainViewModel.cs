@@ -200,7 +200,7 @@ namespace WpfGridControlTest01.ViewModels
                 //    });
                 //}
 
-                for (int i = 5; i < 11; i++)
+                for (int i = 5; i < 110; i++)
                 {
                     bool isMine = false;
                     bool chk1 = false;
@@ -216,8 +216,8 @@ namespace WpfGridControlTest01.ViewModels
                     Products2.Add(new Product2()
                     {
                         IsMine = isMine,
-                        BandWide = string.Format("{0}00", i),
-                        Freq = string.Format("{0}000", i),
+                        BandWide = string.Format("{0:f2}", i),
+                        Freq = string.Format("{0:f3}", i),
                         Chk1 = chk1,
                         Chk2 = chk2,
                         SelectedProdcutId = i-5

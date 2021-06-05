@@ -141,9 +141,10 @@
                          ItemsSource="{Binding Products2}"
                          Grid.Row="1"
                          SelectionChanged="gridctrl0_SelectionChanged"
-                         SelectionMode="Row">
+                         SelectionMode="None">
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="tableview0"
+                               EditorShowMode="MouseDown"
                                Tag="Test Value"
                                EnableSelectedRowAppearance="True"
                                ShowTotalSummary="False"
@@ -156,6 +157,7 @@
                                AllowColumnMoving="False"
                                AllowSorting="False"
                                AllowFixedColumnMenu="True"
+                               AllowPaging="True"
                                PreviewMouseLeftButtonDown="tableview0_PreviewMouseLeftButtonDown"
                                RowDoubleClick="tableview0_RowDoubleClick"
                                ShowGridMenu="tableview0_ShowGridMenu"
@@ -173,8 +175,7 @@
                             HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.CellTemplate>
                     <DataTemplate>
-                        <dxe:TextEdit x:Name="PART_Editor"
-                                      HorizontalAlignment="Center" />
+                        <dxe:CheckEdit x:Name="PART_Editor" HorizontalAlignment="Center" />
                     </DataTemplate>
                 </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
@@ -245,10 +246,24 @@
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
             <dxg:GridColumn FieldName="SelectedCate2" Header="Category2" IsSmart="True" HorizontalHeaderContentAlignment="Center">
-                <dxg:GridColumn.EditSettings>
-                    <dxe:ComboBoxEditSettings ItemsSource="{Binding Cates2}"
-                                              HorizontalContentAlignment="Center"/>
-                </dxg:GridColumn.EditSettings>
+                <!--<dxg:GridColumn.EditSettings>
+                    <dxe:ComboBoxEditSettings ItemsSource="{Binding Cates2}" HorizontalContentAlignment="Center"/>
+                </dxg:GridColumn.EditSettings>-->
+                <!--<dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding Cates2}" HorizontalContentAlignment="Center"/>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>-->
+                <!--<dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <ComboBox ItemsSource="{Binding RowData.Row.Cates22}" SelectedItem="{Binding Row.SelectedCate2}" HorizontalContentAlignment="Center"/>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>-->
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:ComboBoxEdit x:Name="PART_Editor" ItemsSource="{Binding RowData.Row.Cates22}" HorizontalContentAlignment="Center"/>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
             </dxg:GridColumn>
         </dxg:GridControl>
         <Button x:Name="BtnAdd"

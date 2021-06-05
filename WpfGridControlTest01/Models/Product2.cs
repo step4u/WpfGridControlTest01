@@ -98,6 +98,21 @@ namespace WpfGridControlTest01.Models
             }
         }
 
+        int _SelectedCate22 = 0;
+        public int SelectedCate22 {
+            get { return _SelectedCate22; }
+            set {
+                SetValue(ref _SelectedCate22, value);
+                System.Diagnostics.Debug.WriteLine("set SelectedCate22");
+            }
+        }
+
+        List<string> _Cates22 = new List<string>() { "123", "234", "345", "456", "789", "890" };
+        public List<string> Cates22 {
+            get { return _Cates22; }
+            set { SetValue(ref _Cates22, value); }
+        }
+
         public object Clone()
         {
             return this.MemberwiseClone();
