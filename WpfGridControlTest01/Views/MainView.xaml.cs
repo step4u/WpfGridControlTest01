@@ -2,20 +2,19 @@
 using DevExpress.Xpf.Bars;
 using DevExpress.Xpf.Grid;
 using System;
+using System.Runtime.Serialization;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
-using System.IO;
-using System.IO.Compression;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WpfGridControlTest01.Classes;
 using WpfGridControlTest01.Models;
 using WpfGridControlTest01.ViewModels;
+using System.Runtime.Serialization.Json;
 
 namespace WpfGridControlTest01.Views
 {
@@ -391,5 +390,69 @@ namespace WpfGridControlTest01.Views
                 popup.Show();
             }
         }
+
+        private void tableview0_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.C && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                int[] rowHandles = gridctrl0.GetSelectedRowHandles();
+                List<Product2> selectedItems = gridctrl0.SelectedItems.OfType<Product2>().ToList();
+
+                List<Product4Clipboard> products = new List<Product4Clipboard>();
+                foreach (var item in selectedItems)
+                {
+                    products.Add(new Product4Clipboard() {Txt = "안녕하세요.", BandWide = item.BandWide, Freq = item.Freq });
+                }
+
+                // string jsonStr = JSONSerializer<List<Product4Clipboard>>.Serialize(products);
+
+                // Clipboard.SetText(jsonStr);
+                Clipboard.SetData("custom_format", products);
+            }
+            else if (e.Key == Key.V && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                string jsonStr = string.Empty;
+                // jsonStr = Clipboard.GetText(TextDataFormat.UnicodeText);
+                bool ret = Clipboard.ContainsData("custom_format");
+                var data = Clipboard.GetData("custom_format");
+            }
+
+            e.Handled = true;
+        }
+
+        private void tableview0_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.C && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                int[] rowHandles = gridctrl0.GetSelectedRowHandles();
+                List<Product2> selectedItems = gridctrl0.SelectedItems.OfType<Product2>().ToList();
+
+                List<Product4Clipboard> products = new List<Product4Clipboard>();
+                foreach (var item in selectedItems)
+                {
+                    products.Add(new Product4Clipboard() { Txt = "안녕하세요.", BandWide = item.BandWide, Freq = item.Freq });
+                }
+
+                DataObject data = new DataObject();
+                data.SetData("custom_format", products);
+
+                string jsonStr = JSONSerializer<List<Product4Clipboard>>.Serialize(products);
+
+                Clipboard.SetText(jsonStr);
+
+                Debug.WriteLine(jsonStr);
+
+                // string jsonTxt = Clipboard.GetText();
+
+            }
+            else if (e.Key == Key.V && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                string jsonTxt = Clipboard.GetText();
+                Debug.WriteLine(jsonTxt);
+            }
+
+            e.Handled = true;
+        }
+
     }
 }
