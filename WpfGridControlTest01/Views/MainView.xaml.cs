@@ -409,12 +409,35 @@ namespace WpfGridControlTest01.Views
                 // Clipboard.SetText(jsonStr);
                 Clipboard.SetData("custom_format", products);
             }
+            if (e.Key == Key.D && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                int[] rowHandles = gridctrl0.GetSelectedRowHandles();
+                List<Product2> selectedItems = gridctrl0.SelectedItems.OfType<Product2>().ToList();
+
+                List<Product4Clipboard> products = new List<Product4Clipboard>();
+                foreach (var item in selectedItems)
+                {
+                    products.Add(new Product4Clipboard() { Txt = "하아하이!!", BandWide = item.BandWide, Freq = item.Freq });
+                }
+
+                // string jsonStr = JSONSerializer<List<Product4Clipboard>>.Serialize(products);
+
+                // Clipboard.SetText(jsonStr);
+                Clipboard.SetData("custom_format2", products);
+            }
             else if (e.Key == Key.V && Keyboard.Modifiers == ModifierKeys.Control)
             {
                 string jsonStr = string.Empty;
                 // jsonStr = Clipboard.GetText(TextDataFormat.UnicodeText);
                 bool ret = Clipboard.ContainsData("custom_format");
                 var data = Clipboard.GetData("custom_format");
+            }
+            else if (e.Key == Key.B && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                string jsonStr = string.Empty;
+                // jsonStr = Clipboard.GetText(TextDataFormat.UnicodeText);
+                bool ret = Clipboard.ContainsData("custom_format");
+                var data = Clipboard.GetData("custom_format2");
             }
 
             e.Handled = true;
@@ -454,5 +477,9 @@ namespace WpfGridControlTest01.Views
             e.Handled = true;
         }
 
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            string txtbox = txtBox.Text;
+        }
     }
 }

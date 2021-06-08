@@ -301,7 +301,35 @@
                 Content="메시지"
                 Command="{Binding ShowMessageCommand}"
                 HorizontalAlignment="Left" Margin="469,8,0,0" VerticalAlignment="Top" Width="75" Grid.Row="0"/>
-        <dxe:CheckEdit HorizontalAlignment="Left" Margin="338,10,0,0" VerticalAlignment="Top"/>
+        <dxe:CheckEdit x:Name="chk0" HorizontalAlignment="Left" Margin="559,8,0,0" VerticalAlignment="Top">
+            <!--<dxe:CheckEdit.Style>
+                <Style TargetType="{x:Type dxe:CheckEdit}">
+                    <Style.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=txtBox}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </dxe:CheckEdit.Style>-->
+        </dxe:CheckEdit>
         <CheckBox HorizontalAlignment="Left" Margin="357,14,0,0" VerticalAlignment="Top" Template="{DynamicResource CheckBoxControlTemplate1}"/>
+        <dxe:TextEdit x:Name="txtBox"
+                      HorizontalContentAlignment="Center"
+                      IsEnabled="{Binding ElementName=chk0, Path=IsChecked}"
+                      HorizontalAlignment="Left" Margin="579,8,0,0" VerticalAlignment="Top" Width="65">
+            <dxe:TextEdit.Style>
+                <Style TargetType="{x:Type dxe:TextEdit}">
+                    <Style.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Text" Value="0"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="True">
+                            <Setter Property="FocusManager.FocusedElement" Value="{Binding ElementName=txtBox}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </dxe:TextEdit.Style>
+        </dxe:TextEdit>
+        <Button Content="확인" HorizontalAlignment="Left" Margin="660,8,0,0" VerticalAlignment="Top" Width="60" Grid.Row="0" Click="Button_Click_4"/>
     </Grid>
 </UserControl>
