@@ -141,6 +141,7 @@
                          ItemsSource="{Binding Products2}"
                          Grid.Row="1"
                          SelectionChanged="gridctrl0_SelectionChanged"
+                         PreviewKeyDown="gridctrl0_PreviewKeyDown"
                          SelectionMode="Row">
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="tableview0"
@@ -158,7 +159,6 @@
                                AllowSorting="False"
                                AllowFixedColumnMenu="True"
                                AllowPaging="True"
-                               KeyDown="tableview0_KeyDown"
                                PreviewMouseLeftButtonDown="tableview0_PreviewMouseLeftButtonDown"
                                RowDoubleClick="tableview0_RowDoubleClick"
                                ShowGridMenu="tableview0_ShowGridMenu"

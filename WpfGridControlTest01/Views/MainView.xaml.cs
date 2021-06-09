@@ -408,6 +408,7 @@ namespace WpfGridControlTest01.Views
 
                 // Clipboard.SetText(jsonStr);
                 Clipboard.SetData("custom_format", products);
+                e.Handled = true;
             }
             if (e.Key == Key.D && Keyboard.Modifiers == ModifierKeys.Control)
             {
@@ -424,6 +425,7 @@ namespace WpfGridControlTest01.Views
 
                 // Clipboard.SetText(jsonStr);
                 Clipboard.SetData("custom_format2", products);
+                e.Handled = true;
             }
             else if (e.Key == Key.V && Keyboard.Modifiers == ModifierKeys.Control)
             {
@@ -431,6 +433,7 @@ namespace WpfGridControlTest01.Views
                 // jsonStr = Clipboard.GetText(TextDataFormat.UnicodeText);
                 bool ret = Clipboard.ContainsData("custom_format");
                 var data = Clipboard.GetData("custom_format");
+                e.Handled = true;
             }
             else if (e.Key == Key.B && Keyboard.Modifiers == ModifierKeys.Control)
             {
@@ -438,9 +441,8 @@ namespace WpfGridControlTest01.Views
                 // jsonStr = Clipboard.GetText(TextDataFormat.UnicodeText);
                 bool ret = Clipboard.ContainsData("custom_format");
                 var data = Clipboard.GetData("custom_format2");
+                e.Handled = true;
             }
-
-            e.Handled = true;
         }
 
         private void tableview0_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -466,20 +468,54 @@ namespace WpfGridControlTest01.Views
                 Debug.WriteLine(jsonStr);
 
                 // string jsonTxt = Clipboard.GetText();
-
+                e.Handled = true;
             }
             else if (e.Key == Key.V && Keyboard.Modifiers == ModifierKeys.Control)
             {
                 string jsonTxt = Clipboard.GetText();
                 Debug.WriteLine(jsonTxt);
+                e.Handled = true;
             }
-
-            e.Handled = true;
+            
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
             string txtbox = txtBox.Text;
+
+            DXWindow1 win = new DXWindow1();
+            win.Show();
+        }
+
+        private void gridctrl0_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.C && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                int[] rowHandles = gridctrl0.GetSelectedRowHandles();
+                List<Product2> selectedItems = gridctrl0.SelectedItems.OfType<Product2>().ToList();
+
+                List<Product4Clipboard> products = new List<Product4Clipboard>();
+                foreach (var item in selectedItems)
+                {
+                    products.Add(new Product4Clipboard() { Txt = "안녕하세요.", BandWide = item.BandWide, Freq = item.Freq });
+                }
+
+                // string jsonStr = JSONSerializer<List<Product4Clipboard>>.Serialize(products);
+
+                // Clipboard.SetText(jsonStr);
+                Clipboard.SetData("custom_format", products);
+                e.Handled = true;
+            }
+            else if (e.Key == Key.V && Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                string jsonStr = string.Empty;
+                // jsonStr = Clipboard.GetText(TextDataFormat.UnicodeText);
+                bool ret = Clipboard.ContainsData("custom_format");
+                var data = Clipboard.GetData("custom_format");
+                e.Handled = true;
+            }
+            else { }
+
         }
     }
 }
