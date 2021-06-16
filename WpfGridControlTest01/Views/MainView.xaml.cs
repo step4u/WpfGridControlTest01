@@ -15,6 +15,8 @@ using WpfGridControlTest01.Classes;
 using WpfGridControlTest01.Models;
 using WpfGridControlTest01.ViewModels;
 using System.Runtime.Serialization.Json;
+using System.Windows.Controls.Primitives;
+using System.Windows.Interop;
 
 namespace WpfGridControlTest01.Views
 {
@@ -55,6 +57,16 @@ namespace WpfGridControlTest01.Views
 
             this.Loaded += MainView_Loaded;
             this.Unloaded += MainView_Unloaded;
+            this.PreviewMouseLeftButtonDown += MainView_PreviewMouseLeftButtonDown;
+        }
+
+        Point pointFromMain;
+        private void MainView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //Point position = e.MouseDevice.GetPosition((MainView)sender);
+            //point = PointToScreen(position);
+
+            pointFromMain = e.MouseDevice.GetPosition((MainView)sender);
         }
 
         private void MainView_Unloaded(object sender, RoutedEventArgs e)
@@ -481,10 +493,61 @@ namespace WpfGridControlTest01.Views
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-            string txtbox = txtBox.Text;
+            //string txtbox = txtBox.Text;
 
-            DXWindow1 win = new DXWindow1();
-            win.Show();
+            //DXWindow1 win = new DXWindow1();
+            //win.Show();
+
+            if (Popup1.IsOpen)
+            {
+                Popup1.IsOpen = false;
+            }
+            else
+            {
+                Popup1.CustomPopupPlacementCallback = new CustomPopupPlacementCallback(placePopup);
+                Popup1.IsOpen = true;
+            }
+        }
+
+        private CustomPopupPlacement[] placePopup(Size popupSize, Size targetSize, Point offset)
+        {
+            //Point _point = PointToScreen(pointFromMain);
+            //pointFromMain;
+
+            double popupTop = pointFromMain.Y - Popup1.Height;
+            double popupLeft = pointFromMain.X - Popup1.Width;
+            double popupRight = pointFromMain.X + Popup1.Width;
+
+            //if (popupTop < 0)
+            //{
+            //    pointFromMain.Y = 0;
+            //}
+
+            //if (popupLeft < 0)
+            //{
+            //    pointFromMain.X = 0;
+            //}
+
+            Point point2Screen = this.PointToScreen(pointFromMain);
+            Point screen2Point = this.PointFromScreen(pointFromMain);
+
+            //double screenWidth = SystemParameters.WorkArea.Width;
+            //double screenHeight = SystemParameters.WorkArea.Height;
+
+
+            var interopHelper = new WindowInteropHelper(System.Windows.Application.Current.MainWindow);
+            var activeScreen = System.Windows.Forms.Screen.FromHandle(interopHelper.Handle);
+
+            //if (popupRight > )
+            //{
+
+            //}
+
+            CustomPopupPlacement placement1 = new CustomPopupPlacement(pointFromMain, PopupPrimaryAxis.Vertical);
+            CustomPopupPlacement placement2 = new CustomPopupPlacement(pointFromMain, PopupPrimaryAxis.Horizontal);
+            CustomPopupPlacement[] ttplaces = new CustomPopupPlacement[] { placement1, placement2 };
+
+            return ttplaces;      
         }
 
         private void gridctrl0_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -516,6 +579,12 @@ namespace WpfGridControlTest01.Views
             }
             else { }
 
+        }
+
+        private void tableview0_EditFormShowing(object sender, EditFormShowingEventArgs e)
+        {
+            int rowHandle = e.RowHandle;
+            var row = gridctrl0.GetRow(rowHandle);
         }
     }
 }

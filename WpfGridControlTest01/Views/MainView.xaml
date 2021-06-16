@@ -137,14 +137,28 @@
             <RowDefinition Height="45"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        
+        <Popup Name="Popup1"
+               Placement="Custom"
+               PopupAnimation="Fade"
+               IsOpen="False"
+               Width="194" Height="200">
+            <StackPanel>
+                <TextBlock Name="McTextBlock" Background="LightBlue">
+                This is popup text
+                </TextBlock>
+                <Button Content="This is button on a Pupup"/>
+            </StackPanel>
+        </Popup>
+
         <dxg:GridControl x:Name="gridctrl0"
                          ItemsSource="{Binding Products2}"
                          Grid.Row="1"
                          SelectionChanged="gridctrl0_SelectionChanged"
-                         PreviewKeyDown="gridctrl0_PreviewKeyDown"
                          SelectionMode="Row">
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="tableview0"
+                               EditFormShowMode="Dialog"
                                EditorShowMode="MouseDown"
                                Tag="Test Value"
                                EnableSelectedRowAppearance="True"
@@ -159,6 +173,8 @@
                                AllowSorting="False"
                                AllowFixedColumnMenu="True"
                                AllowPaging="True"
+                               EditFormShowing="tableview0_EditFormShowing"
+                               PreviewKeyDown="tableview0_PreviewKeyDown"
                                PreviewMouseLeftButtonDown="tableview0_PreviewMouseLeftButtonDown"
                                RowDoubleClick="tableview0_RowDoubleClick"
                                ShowGridMenu="tableview0_ShowGridMenu"
@@ -172,6 +188,7 @@
             </dxg:GridControl.View>
             <dxg:GridColumn FieldName="IsMine"
                             Header="Mine"
+                            EditFormVisible="False"
                             IsSmart="True"
                             HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.CellTemplate>
@@ -183,6 +200,7 @@
 
             <dxg:GridColumn FieldName="Chk1"
                             Header="CHK1"
+                            EditFormVisible="False"
                             IsSmart="True"
                             HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.CellTemplate>
@@ -196,6 +214,7 @@
                 </dxg:GridColumn.EditSettings>-->
             </dxg:GridColumn>
             <dxg:GridColumn FieldName="BandWide"
+                            EditFormVisible="False"
                             IsSmart="True"
                             HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
@@ -204,6 +223,7 @@
             </dxg:GridColumn>
             <dxg:GridColumn FieldName="Chk2"
                             Header="CHK2"
+                            EditFormVisible="False"
                             IsSmart="True"
                             HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.CellTemplate>
@@ -217,6 +237,7 @@
                 </dxg:GridColumn.EditSettings>-->
             </dxg:GridColumn>
             <dxg:GridColumn FieldName="Freq"
+                            EditFormVisible="False"
                             IsSmart="True"
                             HorizontalHeaderContentAlignment="Center"
                             AllowEditing="True">
@@ -226,6 +247,7 @@
             </dxg:GridColumn>
             <dxg:GridColumn FieldName="SelectedProdcutId"
                             Header="Procut Type"
+                            EditFormVisible="False"
                             IsSmart="True"
                             AllowEditing="True"
                             HorizontalHeaderContentAlignment="Center">
@@ -233,12 +255,19 @@
                     <dxe:ComboBoxEditSettings ItemsSource="{Binding ProductTypes}" DisplayMember="TypeName" ValueMember="Id" HorizontalContentAlignment="Center"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn FieldName="SelectedMode" Header="Mode" IsSmart="True" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn FieldName="SelectedMode" Header="Mode"
+                            EditFormVisible="False"
+                            IsSmart="True"
+                            HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
-                    <dxe:ComboBoxEditSettings ItemsSource="{Binding Path=Modes}" HorizontalContentAlignment="Center"/>
+                    <dxe:ComboBoxEditSettings ItemsSource="{Binding Path=Modes}" HorizontalContentAlignment="Center" IsTextEditable="False"/>
                 </dxg:GridColumn.EditSettings>
             </dxg:GridColumn>
-            <dxg:GridColumn FieldName="SelectedCate" Header="Category" IsSmart="True" HorizontalHeaderContentAlignment="Center">
+            <dxg:GridColumn FieldName="SelectedCate"
+                            Header="Category"
+                            EditFormVisible="False"
+                            IsSmart="True"
+                            HorizontalHeaderContentAlignment="Center">
                 <dxg:GridColumn.EditSettings>
                     <dxe:ComboBoxEditSettings ItemsSource="{Binding Cates}"
                                               DisplayMember="Value"
