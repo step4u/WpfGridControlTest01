@@ -9,6 +9,7 @@
     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
     xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
     xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    x:Name="mainView"
     x:Class="WpfGridControlTest01.Views.MainView"
     mc:Ignorable="d" d:DesignHeight="600" d:DesignWidth="900">
     <UserControl.DataContext>
@@ -131,24 +132,66 @@
     </UserControl.Resources>
     <dxmvvm:Interaction.Behaviors>
         <dx:DXMessageBoxService/>
+        <dxmvvm:EventToCommand EventName="RowDoubleClick"
+                               SourceName="tableview0"
+                               Command="{Binding RowDoubleClickCommand}"
+                               PassEventArgsToCommand="True"/>
+        <dxmvvm:EventToCommand EventName="PreviewMouseLeftButtonDown"
+                               SourceName="tableview0"
+                               Command="{Binding PreviewMouseLeftButtonDownCommand}"
+                               PassEventArgsToCommand="True"/>
     </dxmvvm:Interaction.Behaviors>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="45"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <Popup Name="Popup1"
-               Placement="Custom"
+               IsOpen="{Binding IsPopupOpened}"
+               PlacementTarget="{Binding PlacementTarget}"
+               Placement="Relative"
                PopupAnimation="Fade"
-               IsOpen="False"
-               Width="194" Height="200">
-            <StackPanel>
-                <TextBlock Name="McTextBlock" Background="LightBlue">
-                This is popup text
-                </TextBlock>
-                <Button Content="This is button on a Pupup"/>
-            </StackPanel>
+               Width="{Binding PopupWidth}"
+               Height="{Binding PopupHeight}"
+               AllowsTransparency="True">
+            <Border BorderThickness="1" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Background="White" CornerRadius="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="30"/>
+                    </Grid.RowDefinitions>
+                    <Rectangle Grid.Row="0" Fill="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}"/>
+                    <TextBlock Text="팝업창" Grid.Row="0" VerticalAlignment="Center" Margin="7,0,0,0" />
+                    <TextBox Name="txtbox" Grid.Row="1" Background="White" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="0,1"/>
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Width="70" Height="25">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Border CornerRadius="5" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1">
+                                        <TextBlock Text="OK" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button Grid.Column="1" Width="70" Height="25">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Border CornerRadius="4" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1">
+                                        <TextBlock Text="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <ResizeGrip Grid.Column="1"/>
+                    </Grid>
+                </Grid>
+            </Border>
         </Popup>
 
         <dxg:GridControl x:Name="gridctrl0"
@@ -158,7 +201,7 @@
                          SelectionMode="Row">
             <dxg:GridControl.View>
                 <dxg:TableView x:Name="tableview0"
-                               EditFormShowMode="Dialog"
+                               EditFormShowMode="None"
                                EditorShowMode="MouseDown"
                                Tag="Test Value"
                                EnableSelectedRowAppearance="True"
@@ -175,8 +218,6 @@
                                AllowPaging="True"
                                EditFormShowing="tableview0_EditFormShowing"
                                PreviewKeyDown="tableview0_PreviewKeyDown"
-                               PreviewMouseLeftButtonDown="tableview0_PreviewMouseLeftButtonDown"
-                               RowDoubleClick="tableview0_RowDoubleClick"
                                ShowGridMenu="tableview0_ShowGridMenu"
                                ShowingEditor="tableview0_ShowingEditor"
                                CellValueChanged="tableview0_CellValueChanged">
@@ -359,6 +400,6 @@
                 </Style>
             </dxe:TextEdit.Style>
         </dxe:TextEdit>
-        <Button Content="확인" HorizontalAlignment="Left" Margin="660,8,0,0" VerticalAlignment="Top" Width="60" Grid.Row="0" Click="Button_Click_4"/>
+        <Button x:Name="btn03" Content="확인" HorizontalAlignment="Left" Margin="660,8,0,0" VerticalAlignment="Top" Width="60" Grid.Row="0" Click="Button_Click_4"/>
     </Grid>
 </UserControl>

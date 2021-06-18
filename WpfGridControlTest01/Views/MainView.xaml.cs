@@ -504,12 +504,12 @@ namespace WpfGridControlTest01.Views
             }
             else
             {
-                Popup1.CustomPopupPlacementCallback = new CustomPopupPlacementCallback(placePopup);
+                //Popup1.CustomPopupPlacementCallback = new CustomPopupPlacementCallback(placePopup);
                 Popup1.IsOpen = true;
             }
         }
 
-        private CustomPopupPlacement[] placePopup(Size popupSize, Size targetSize, Point offset)
+        public CustomPopupPlacement[] placePopup(Size popupSize, Size targetSize, Point offset)
         {
             //Point _point = PointToScreen(pointFromMain);
             //pointFromMain;
@@ -586,5 +586,6 @@ namespace WpfGridControlTest01.Views
             int rowHandle = e.RowHandle;
             var row = gridctrl0.GetRow(rowHandle);
         }
+
     }
 }

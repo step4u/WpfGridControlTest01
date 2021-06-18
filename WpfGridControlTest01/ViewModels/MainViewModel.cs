@@ -1,5 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Xpf.Core;
+using DevExpress.Xpf.Grid;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using WpfGridControlTest01.Classes;
 using WpfGridControlTest01.Models;
+using WpfGridControlTest01.Views;
 
 namespace WpfGridControlTest01.ViewModels
 {
@@ -16,6 +18,8 @@ namespace WpfGridControlTest01.ViewModels
     {
         private string MyId = "ATW";
         public ICommand ShowMessageCommand { get; private set; }
+        public ICommand PreviewMouseLeftButtonDownCommand { get; private set; }
+        public ICommand RowDoubleClickCommand { get; private set; }
         IMessageBoxService MessageBoxService { get { return GetService<IMessageBoxService>(); } }
 
         public bool EnableBtnAdd {
@@ -72,13 +76,48 @@ namespace WpfGridControlTest01.ViewModels
             set { SetValue(value); }
         }
 
+        // For Popup
+        public double PopupTop {
+            get { return GetValue<double>(); }
+            set { SetValue(value); }
+        }
+
+        public double PopupLeft {
+            get { return GetValue<double>(); }
+            set { SetValue(value); }
+        }
+
+        public double PopupWidth {
+            get { return GetValue<double>(); }
+            set { SetValue(value); }
+        }
+
+        public double PopupHeight {
+            get { return GetValue<double>(); }
+            set { SetValue(value); }
+        }
+
+        public object PlacementTarget {
+            get { return GetValue<object>(); }
+            set { SetValue(value); }
+        }
+
+        public bool IsPopupOpened {
+            get { return GetValue<bool>(); }
+            set { SetValue(value); }
+        }
+
         public MainViewModel()
         {
             ShowMessageCommand = new DelegateCommand(ShowMessage);
+            PreviewMouseLeftButtonDownCommand = new DelegateCommand<MouseButtonEventArgs>(PreviewMouseLeftButtonDown);
+            RowDoubleClickCommand = new DelegateCommand<RowDoubleClickEventArgs>(RowDoubleClick);
 
             InitData();
             InitProperties();
             InitTimer();
+
+            IsPopupOpened = false;
         }
 
         public ObservableCollection<Product> Products {
@@ -127,6 +166,26 @@ namespace WpfGridControlTest01.ViewModels
             // MessageBoxService.Show("This is MainView!", "경고!!", System.Windows.MessageBoxButton.YesNo);
             ThemedMessageBox.Show(title: "경고!!", text: "테마 메시지 박스!!", messageBoxButtons: MessageBoxButton.OKCancel, icon: MessageBoxImage.Exclamation);
             // MessageBox.Show("기본 윈도우 메시지 박스!!", "경고!!", MessageBoxButton.OKCancel);
+        }
+
+        void PreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            var target = e.OriginalSource;
+        }
+
+        void RowDoubleClick(RowDoubleClickEventArgs e)
+        {
+            int colIdx = e.HitInfo.Column.VisibleIndex;
+            PlacementTarget = ((TableView)e.OriginalSource).GetCellElementByRowHandleAndColumn(e.HitInfo.RowHandle, e.HitInfo.Column);
+            IsPopupOpened = false;
+            IsPopupOpened = true;
+
+            //PopupTop = PopupTop - PopupHeight;
+            //PopupLeft = PopupLeft - PopupLeft / 2;
+
+            //MainView view = (MainView)e.Source;
+
+            //Point point = e.MouseDevice.GetPosition(view);
         }
 
         void InitData()
@@ -235,6 +294,10 @@ namespace WpfGridControlTest01.ViewModels
 
                 //testProducts2.Add(testProduct2);
                 //testProducts22.Add(testProduct2);
+
+                // For Popup
+                PopupWidth = 200;
+                PopupHeight = 150;
             }
         }
 
